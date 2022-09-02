@@ -1,4 +1,9 @@
+// data.current year
+const copyrightYear = new Date().getFullYear();
 
+// logic.generate template literal
+const generateMealPrep = (date, duration) => {
+    return `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -11,14 +16,17 @@
     <body>
         <main>
             <h1>Meal prep</h1>
-            <h2>today</h2>
-            <p id="duration">6 weeks</p>
+            <h2>${date}</h2>
+            <p id="duration">${duration}</p>
         </main>
         <footer>
             <h3 class="section" id="footer">
-                &copy;2022 <a href="#" target="_blank">Edwin m. escobar</a>
+                &copy;${copyrightYear} <a href="#" target="_blank">Edwin m. escobar</a>
            </h3>
         </footer>
     </body>
     </html>
-    
+    `;
+};
+
+module.exports = generateMealPrep;
