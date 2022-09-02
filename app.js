@@ -1,16 +1,31 @@
 // requirements
-const fs = require('fs');
-const generateMealPrep = require('./src/prep-template.js')
+const inquirer = require("inquirer");
+// const fs = require('fs');
+// const generateMealPrep = require('./src/prep-template.js')
 
-// data.captures command line
-const mealPrepData = process.argv.slice(2, process.argv.length);
-const [date, duration] = mealPrepData;
+// // data.captures command line
+// const mealPrepData = generateMealPrep(date, duration);
 
-fs.writeFile('index.html', generateMealPrep(date, duration), err => {
-    if (err) throw new Error(err);
-    console.log('meal prep generated as index.html');
-});
+// fs.writeFile('./index.html', mealPrepData, err => {
+//     if (err) throw new err;
 
+//     console.log('meal prep generated, check out index.html');
+// });
+
+inquirer
+  .prompt([
+    {
+      type: "input",
+      name: "date",
+      message: "when does the prep start?",
+    },
+    {
+      type: "input",
+      name: "duration",
+      message: "what's the duration of the prep?",
+    },
+  ])
+  .then((answers) => console.log(answers));
 
 // ** prompt questions **
 // meal prep start date?
