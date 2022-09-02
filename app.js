@@ -28,6 +28,9 @@
 // };
 // printProfileData(profileDataArgs);
 
+// requirements
+const fs = require('fs');
+
 // data.current year
 const copyrightYear = new Date().getFullYear();
 
@@ -63,5 +66,7 @@ const generateMealPrep = (date, duration) => {
     `;
 };
 
-console.log(date, duration);
-console.log(generateMealPrep(date, duration));
+fs.writeFile('index.html', generateMealPrep(date, duration), err => {
+    if (err) throw err;
+    console.log('meal prep generated as index.html');
+});
