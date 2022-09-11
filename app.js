@@ -72,6 +72,10 @@ const mealOnePrompt = () => {
     ::: Meal one :::
     `)
 
+    if (!mealPrepData[0].mealOne) {
+        mealPrepData[0].mealOne = []
+    }
+
     return inquirer.prompt([
         {
             type: "input",
@@ -86,7 +90,8 @@ const mealOnePrompt = () => {
         },
     ])
     .then(foodData => {
-        console.log(foodData);
+        mealPrepData[0].mealOne.push(foodData)
+        console.log(mealPrepData[0].mealOne);
         if (foodData.confirmMoreFood) {
             console.log("adding more food");
         } else {
