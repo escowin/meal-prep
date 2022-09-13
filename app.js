@@ -56,7 +56,6 @@ const mealPrepInfo = () => {
             return true
           }
         },
-
     ]);
 };
 
@@ -90,13 +89,15 @@ const mealOnePrompt = () => {
         },
     ])
     .then(foodData => {
-        mealPrepData[0].mealOne.push(foodData)
-        console.log(mealPrepData[0].mealOne);
+        mealPrepData[0].mealOne.push(foodData);
         if (foodData.confirmMoreFood) {
             console.log("adding more food");
+        } else if (mealPrepData[0].meals > 1) {
+            console.log("more meals to be added");
         } else {
-            console.log("done adding food")
+            console.log("done");
         }
+        console.log(mealPrepData[0]);
     });
 };
 
