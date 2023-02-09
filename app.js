@@ -37,11 +37,33 @@ const questions = [
   },
   {
     type: "input",
-    name: "sups",
+    name: "supps",
     message: "enter supp:",
     when: answers => answers.details.includes("supplements")
+  },
+  {
+    type: "input",
+    name: "cardio",
+    message: "enter cardio:",
+    when: answers => answers.details.includes("cardio")
+  },
+  {
+    type: "input",
+    name: "split",
+    message: "enter workout split:",
+    when: answers => answers.details.includes("workout split")
   }
 ]
+
+const mockData = {
+  name: 'test',
+  startDate: '111',
+  duration: 3,
+  meals: 4,
+  details: [ 'cardio', 'workout split' ],
+  cardio: 'cardio',
+  split: 'ppl'
+}
 
 function init() {
   let date = new Date().getFullYear();
@@ -55,11 +77,21 @@ function init() {
   ·················································
   `);
 
-  inquirer.prompt(questions).then(answers => {
-    console.log(answers);
-  })
+  // inquirer.prompt(questions).then(answers => {
+  //   for (let i = 0; i < answers.meals;  i++) {
+  //     mealPrompt(answers)
+  //   }
+  // })
+
+  for (let i = 0; i < mockData.meals; i++) {
+    mealPrompt(mockData)
+  }
 }
 
+
+function mealPrompt(answers) {
+  console.log(answers.meals)
+}
 
 // calls
 init();
