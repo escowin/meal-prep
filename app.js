@@ -1,7 +1,7 @@
 const inquirer = require("inquirer");
 // const fs = require('fs');
 
-const questions = [
+const prepQuestions = [
   {
     type: "input",
     name: "name",
@@ -12,7 +12,7 @@ const questions = [
         return false;
       }
       return true;
-    }
+    },
   },
   {
     type: "input",
@@ -33,37 +33,50 @@ const questions = [
     type: "checkbox",
     name: "details",
     message: "select additional details to add:",
-    choices: ["supplements", "cardio", "workout split"]
+    choices: ["supplements", "cardio", "workout split"],
   },
   {
     type: "input",
     name: "supps",
     message: "enter supp:",
-    when: answers => answers.details.includes("supplements")
+    when: (answers) => answers.details.includes("supplements"),
   },
   {
     type: "input",
     name: "cardio",
     message: "enter cardio:",
-    when: answers => answers.details.includes("cardio")
+    when: (answers) => answers.details.includes("cardio"),
   },
   {
     type: "input",
     name: "split",
     message: "enter workout split:",
-    when: answers => answers.details.includes("workout split")
-  }
-]
+    when: (answers) => answers.details.includes("workout split"),
+  },
+];
+
+const mealQuestions = [
+  {
+    type: "input",
+    name: "meal",
+    message: "add food item",
+  },
+  {
+    type: "confirm",
+    name: "continue",
+    message: "add another food item?",
+  },
+];
 
 const mockData = {
-  name: 'test',
-  startDate: '111',
+  name: "mock prep",
+  startDate: "2023.02.08",
   duration: 3,
   meals: 4,
-  details: [ 'cardio', 'workout split' ],
-  cardio: 'cardio',
-  split: 'ppl'
-}
+  details: ["cardio", "workout split"],
+  cardio: "rowing/5x week",
+  split: "chest/delts/back/arms/legs",
+};
 
 function init() {
   let date = new Date().getFullYear();
@@ -83,14 +96,48 @@ function init() {
   //   }
   // })
 
-  for (let i = 0; i < mockData.meals; i++) {
-    mealPrompt(mockData)
-  }
+  // for (let i = 0; i < mockData.meals; i++) {
+  //   mealPrompt(mockData)
+  // }
+  mealPrompt(mockData);
 }
 
+function mealPrompt(answers, index = 0) {
 
-function mealPrompt(answers) {
-  console.log(answers.meals)
+  // prepInfo object structure
+  // - mealPrep is an array that holds objects equal to the meals key-value.
+  // - each object holds a food array
+  // - the array holds cli string objects
+  // let prepInfo = {
+  //   // other properties
+  //   mealPrep: [
+  //     { 
+  //       food: [ 
+  //         "food item 1",
+  //         "food item 2",
+  //       ],
+  //     },
+  //   ],
+  // };
+  // goal | meal.food
+
+  // fix 
+  // 1 push string values as one object into foodItems array.
+  // 2 foodItems array should be pushed into object
+  // 3 that object needs to be pushed into mealPrepArray
+  if (index >= answers.meals) {
+    console.log(answers);
+    return;
+  }
+
+  inquirer.prompt(mealQuestions).then((mealAnswers) => {
+    answers[`meal${index + 1}`] = mealAnswers.meal;
+    if (mealAnswers.continue) {
+      mealPrompt(answers, index + 1);
+    } else {
+      console.log(answers);
+    }
+  });
 }
 
 // calls
