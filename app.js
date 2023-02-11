@@ -1,20 +1,4 @@
 const inquirer = require("inquirer");
-// const fs = require('fs');
-
-const mealQuestions = [
-  {
-    type: "input",
-    name: "food",
-    message: "add food item",
-  },
-  {
-    type: "confirm",
-    name: "confirmAddFood",
-    message: "add another food item?",
-  },
-  // confirm true repeat prompt
-  // confirm false ends prompt
-];
 
 const mockData = {
   name: "mock prep",
@@ -62,10 +46,10 @@ const init = () => {
   ·                                               ·
   ·················································
   `);
-}
+};
 
 const prepPrompt = () => {
-  return prepPromptMockData
+  return prepPromptMockData;
   // return inquirer.prompt([
   //   {
   //     type: "input",
@@ -119,33 +103,76 @@ const prepPrompt = () => {
   //     when: (answers) => answers.details.includes("workout split"),
   //   },
   // ]);
-}
+};
 
+// this function needs to repeat equal to the meals key-value (ex. 'meals: 3', this function repeats three times so that there will ultimately be three objects within the mealPrep array)
 const initMealPrep = (prepInfo) => {
-  console.log(prepInfo)
   if (!prepInfo.mealPrep) {
     prepInfo.mealPrep = [];
   }
 
-  console.log(prepInfo);
+  for (let i = 0; i < prepInfo.meals; i++) {
+    console.log(`
+    ·················································
+    ·                   meal prep                   ·
+    ·················································
+    `);
 
-  return console.log(`
-  ·················································
-  ·                  meal # info                  ·
-  ·················································
-  `);
-}
+    prepInfo.mealPrep.push({
+      food: []
+    });
 
-function foodPrompt(prepInfo) {
-  console.log(prepInfo)
-  // inquirer.prompt(mealQuestions).then((answers) => {
-  //   if (!answers.confirmAddFood) {
-  //     foodItems.push(answers.food)
-  //     console.log(foodItems)
-  //   } else {
-  //     foodPrompt();
-  //   }
-  // });
-}
+    if (i < prepInfo.meals - 1) {
+      prepInfo = foodPrompt(prepInfo);
+    }
+  }
+
+  return prepInfo;
+};
+
+// this function repeats if confirmAddFood key-value is true.
+const foodPrompt = (prepInfo) => {
+  const lastMeal = prepInfo.mealPrep[prepInfo.mealPrep.length - 1];
+  const mealCount = prepInfo.mealPrep.length;
+  
+  const questions = [
+    {
+      type: "input",
+      name: "food",
+      message: `add food item for meal #${mealCount}`,
+    },
+    {
+      type: "confirm",
+      name: "confirmAddFood",
+      message: "add another food item?",
+    },
+  ];
+
+  return inquirer.prompt(questions)
+    .then((answers) => {
+      lastMeal.food.push(answers.food);
+
+      if (answers.confirmAddFood) {
+        return foodPrompt(prepInfo);
+      }
+
+      if (prepInfo.meals > mealCount) {
+        prepInfo.mealPrep.push({
+          food: []
+        });
+        return foodPrompt(prepInfo);
+      }
+
+      return prepInfo;
+    });
+};
+
 // calls
-init().then(prepPrompt).then(initMealPrep)
+init()
+  .then(prepPrompt)
+  .then(initMealPrep)
+  .then(foodPrompt)
+  .then((data) => {
+    console.log(data);
+    console.log(data.mealPrep);
+  });
