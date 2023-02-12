@@ -17,7 +17,7 @@ const mockData = {
         food: ["5oz chicken", "3oz mixed vegies"],
       },
       {
-        food: ["1.8oz protein powder, 1 tbsp peanut butter"],
+        food: ["1.8oz protein powder", "1 tbsp peanut butter"],
       },
       {
         food: ["6oz white meat", "3oz veggies", "5oz rice"],
@@ -61,10 +61,9 @@ const generatePage = (templateData) => {
 };
 
 const generateMealPrepSections = (mealPrepData) => {
-    console.log(mealPrepData)
     mealPrepData.forEach((meal, i) => {
         console.log(`meal ${i + 1}`)
-        console.log(meal.food)
+        meal.food.forEach(foodItems => console.log(foodItems))
     })
 
     return 'test'
