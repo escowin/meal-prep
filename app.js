@@ -1,4 +1,4 @@
-const { writeFile } = require('./utils/generate-page');
+const { writeFile, copyFile } = require('./utils/generate-page');
 const inquirer = require("inquirer");
 const generateTemplate = require("./src/prep-template");
 // const fs = require("fs");
@@ -188,4 +188,7 @@ init()
   })
   .then(writeFileResponse => {
     console.log(writeFileResponse)
-  });
+    return copyFile();
+  })
+  .then(copyFileResponse => console.log(copyFileResponse))
+  .catch(err => console.log(err));
