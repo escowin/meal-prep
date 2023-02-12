@@ -2,9 +2,10 @@
 const copyrightYear = new Date().getFullYear();
 
 // logic.generate template literal
-const generatePage = (mealPrepInfo) => {
-    console.log(mealPrepInfo)
-    console.log(mealPrepInfo.mealPrep)
+const generatePage = (templateData) => {
+    const { mealPrep, ...prepInfo } = templateData
+    console.log(mealPrep)
+    console.log(prepInfo)
 
     // return `
     // <!DOCTYPE html>
