@@ -1,21 +1,21 @@
 {
-  "name": "meal-prepping",
+  "name": "meal-prep",
   "version": "1.0.0",
-  "description": "meal prep generator",
+  "description": "meal prep",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/escowin/meal-prepping.git"
+    "url": "git+https://github.com/escowin/meal-prep.git"
   },
   "author": "Edwin M. Escobar",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/escowin/meal-prepping/issues"
+    "url": "https://github.com/escowin/meal-prep/issues"
   },
-  "homepage": "https://github.com/escowin/meal-prepping#readme",
+  "homepage": "https://github.com/escowin/meal-prep#readme",
   "dependencies": {
     "inquirer": "^8.2.4"
   }

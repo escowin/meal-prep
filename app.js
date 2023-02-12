@@ -1,8 +1,6 @@
-const { writeFile, copyFile } = require('./utils/generate-page');
 const inquirer = require("inquirer");
+const { writeFile, copyFile } = require('./utils/generate-page');
 const generateTemplate = require("./src/prep-template");
-// const fs = require("fs");
-
 
 const mockData = {
   name: "mock prep",
@@ -38,13 +36,14 @@ const prepPromptMockData = {
   split: "chest/delts/back/arms/legs",
 };
 
+// logic
 const init = () => {
   let date = new Date().getFullYear();
   // returns a string via promise object
   return Promise.resolve(`
   ·················································
   ·                                               ·
-  ·               meal prep v0.1.2                ·
+  ·               meal prep v1.0.0                ·
   ·            © ${date} edwin m. escobar            ·
   ·     https://github.com/escowin/meal-prep      ·
   ·                                               ·
@@ -53,68 +52,68 @@ const init = () => {
 };
 
 const prepPrompt = () => {
-  return prepPromptMockData;
-  // return inquirer.prompt([
-  //   {
-  //     type: "input",
-  //     name: "name",
-  //     message: "enter prep name:",
-  //     validate: (nameInput) => {
-  //       if (!nameInput) {
-  //         console.log("enter prep name:");
-  //         return false;
-  //       }
-  //       return true;
-  //     },
-  //   },
-  //   {
-  //     type: "input",
-  //     name: "startDate",
-  //     message: "enter start date (yyyy.mm.dd):",
-  //   },
-  //   {
-  //     type: "number",
-  //     name: "duration",
-  //     message: "how many weeks?",
-  //   },
-  //   {
-  //     type: "number",
-  //     name: "meals",
-  //     message: "how many meals?",
-  //   },
-  //   {
-  //     type: "checkbox",
-  //     name: "details",
-  //     message: "select additional details to add:",
-  //     choices: ["supplements", "cardio", "workout split"],
-  //   },
-  //   {
-  //     type: "input",
-  //     name: "supps",
-  //     message: "enter supp:",
-  //     when: (answers) => answers.details.includes("supplements"),
-  //   },
-  //   {
-  //     type: "input",
-  //     name: "cardio",
-  //     message: "enter cardio:",
-  //     when: (answers) => answers.details.includes("cardio"),
-  //   },
-  //   {
-  //     type: "input",
-  //     name: "split",
-  //     message: "enter workout split:",
-  //     when: (answers) => answers.details.includes("workout split"),
-  //   },
-  // ]);
+  return inquirer.prompt([
+    {
+      type: "input",
+      name: "name",
+      message: "enter prep name:",
+      validate: (nameInput) => {
+        if (!nameInput) {
+          console.log("enter prep name:");
+          return false;
+        }
+        return true;
+      },
+    },
+    {
+      type: "input",
+      name: "startDate",
+      message: "enter start date (yyyy.mm.dd):",
+    },
+    {
+      type: "number",
+      name: "duration",
+      message: "how many weeks?",
+    },
+    {
+      type: "number",
+      name: "meals",
+      message: "how many meals?",
+    },
+    {
+      type: "checkbox",
+      name: "details",
+      message: "select additional details to add:",
+      choices: ["supplements", "cardio", "workout split"],
+    },
+    {
+      type: "input",
+      name: "supps",
+      message: "enter supp:",
+      when: (answers) => answers.details.includes("supplements"),
+    },
+    {
+      type: "input",
+      name: "cardio",
+      message: "enter cardio:",
+      when: (answers) => answers.details.includes("cardio"),
+    },
+    {
+      type: "input",
+      name: "split",
+      message: "enter workout split:",
+      when: (answers) => answers.details.includes("workout split"),
+    },
+  ]);
 };
 
-// this function needs to repeat equal to the meals key-value (ex. 'meals: 3', this function repeats three times so that there will ultimately be three objects within the mealPrep array)
 const initMealPrep = (prepInfo) => {
+  // initializes the mealPrep array on the first pass
   if (!prepInfo.mealPrep) {
     prepInfo.mealPrep = [];
   }
 
+  // loops through equal to the amount of meals in the prep
   for (let i = 0; i < prepInfo.meals; i++) {
     console.log(`
     ·················································
@@ -122,13 +121,16 @@ const initMealPrep = (prepInfo) => {
     ·················································
     `);
 
+    // pushes an object with a food array into meal prep
     prepInfo.mealPrep.push({
       food: []
     });
 
+    // returns updated prepInfo object once the index value matches the amount of meals in the prep
     if (i = prepInfo.meals - 1) {
       return prepInfo;
     } else if (i < prepInfo.meals - 1) {
+      // if less than that, the food prompt is called to add to prepInfo 
       prepInfo = foodPrompt(prepInfo);
     }
   }
@@ -136,7 +138,6 @@ const initMealPrep = (prepInfo) => {
   return prepInfo;
 };
 
-// this function repeats if confirmAddFood key-value is true.
 const foodPrompt = (prepInfo) => {
   const lastMeal = prepInfo.mealPrep[prepInfo.mealPrep.length - 1];
   const mealCount = prepInfo.mealPrep.length;
@@ -145,7 +146,7 @@ const foodPrompt = (prepInfo) => {
     {
       type: "input",
       name: "food",
-      message: `add food item for meal #${mealCount}`,
+      message: `add food item for meal #${mealCount}:`,
     },
     {
       type: "confirm",
@@ -173,14 +174,12 @@ const foodPrompt = (prepInfo) => {
     });
 };
 
-// calls
+// calls | chaining .then() method for legibility 
 init()
   .then(prepPrompt)
   .then(initMealPrep)
   .then(foodPrompt)
   .then((prepInfo) => {
-    // console.log(prepInfo);
-    // console.log(prepInfo.mealPrep);
     return generateTemplate(prepInfo)
   })
   .then(template => {

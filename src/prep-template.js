@@ -26,7 +26,7 @@ const generatePage = (templateData) => {
         </main>
         <footer>
             <h3>
-                &copy;${copyrightYear} <a href="https://github.com/escowin/meal-prepper" target="_blank">Edwin m. escobar</a>
+                &copy;${copyrightYear} <a href="https://github.com/escowin/meal-prep" target="_blank">Edwin m. escobar</a>
            </h3>
         </footer>
     </body>
