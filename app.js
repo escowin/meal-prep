@@ -1,5 +1,6 @@
+const { writeFile } = require('./utils/generate-page');
 const inquirer = require("inquirer");
-const generatePage = require("./src/prep-template");
+const generateTemplate = require("./src/prep-template");
 // const fs = require("fs");
 
 
@@ -180,6 +181,11 @@ init()
   .then((prepInfo) => {
     // console.log(prepInfo);
     // console.log(prepInfo.mealPrep);
-    return generatePage(prepInfo)
+    return generateTemplate(prepInfo)
   })
-  .then(template => console.log(template));
+  .then(template => {
+    return writeFile(template)
+  })
+  .then(writeFileResponse => {
+    console.log(writeFileResponse)
+  });
