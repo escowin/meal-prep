@@ -61,13 +61,18 @@ const generatePage = (templateData) => {
 };
 
 const generateMealPrepSections = (mealPrepData) => {
+    let template = '';
+
     mealPrepData.forEach((meal, i) => {
-        console.log(`meal ${i + 1}`)
-        meal.food.forEach(foodItems => console.log(foodItems))
+        template += `<section><h2>meal ${i + 1}</h2><article>`
+        meal.food.forEach(foodItem => template += `<p>${foodItem}</p>`)
+        template += `</article></section>`
     })
 
-    return 'test'
+    console.log(template)
+    return template
 }
+
 generatePage(mockData);
 
 
