@@ -1,4 +1,7 @@
 const inquirer = require("inquirer");
+const generatePage = require("./src/prep-template");
+// const fs = require("fs");
+
 
 const mockData = {
   name: "mock prep",
@@ -49,63 +52,63 @@ const init = () => {
 };
 
 const prepPrompt = () => {
-  return prepPromptMockData;
-  // return inquirer.prompt([
-  //   {
-  //     type: "input",
-  //     name: "name",
-  //     message: "enter prep name:",
-  //     validate: (nameInput) => {
-  //       if (!nameInput) {
-  //         console.log("enter prep name:");
-  //         return false;
-  //       }
-  //       return true;
-  //     },
-  //   },
-  //   {
-  //     type: "input",
-  //     name: "startDate",
-  //     message: "enter start date (yyyy.mm.dd):",
-  //   },
-  //   {
-  //     type: "number",
-  //     name: "duration",
-  //     message: "how many weeks?",
-  //   },
-  //   {
-  //     type: "number",
-  //     name: "meals",
-  //     message: "how many meals?",
-  //   },
-  //   {
-  //     type: "checkbox",
-  //     name: "details",
-  //     message: "select additional details to add:",
-  //     choices: ["supplements", "cardio", "workout split"],
-  //   },
-  //   {
-  //     type: "input",
-  //     name: "supps",
-  //     message: "enter supp:",
-  //     when: (answers) => answers.details.includes("supplements"),
-  //   },
-  //   {
-  //     type: "input",
-  //     name: "cardio",
-  //     message: "enter cardio:",
-  //     when: (answers) => answers.details.includes("cardio"),
-  //   },
-  //   {
-  //     type: "input",
-  //     name: "split",
-  //     message: "enter workout split:",
-  //     when: (answers) => answers.details.includes("workout split"),
-  //   },
-  // ]);
+  // return prepPromptMockData;
+  return inquirer.prompt([
+    {
+      type: "input",
+      name: "name",
+      message: "enter prep name:",
+      validate: (nameInput) => {
+        if (!nameInput) {
+          console.log("enter prep name:");
+          return false;
+        }
+        return true;
+      },
+    },
+    {
+      type: "input",
+      name: "startDate",
+      message: "enter start date (yyyy.mm.dd):",
+    },
+    {
+      type: "number",
+      name: "duration",
+      message: "how many weeks?",
+    },
+    {
+      type: "number",
+      name: "meals",
+      message: "how many meals?",
+    },
+    {
+      type: "checkbox",
+      name: "details",
+      message: "select additional details to add:",
+      choices: ["supplements", "cardio", "workout split"],
+    },
+    {
+      type: "input",
+      name: "supps",
+      message: "enter supp:",
+      when: (answers) => answers.details.includes("supplements"),
+    },
+    {
+      type: "input",
+      name: "cardio",
+      message: "enter cardio:",
+      when: (answers) => answers.details.includes("cardio"),
+    },
+    {
+      type: "input",
+      name: "split",
+      message: "enter workout split:",
+      when: (answers) => answers.details.includes("workout split"),
+    },
+  ]);
 };
 
-// this function needs to repeat equal to the meals key-value (ex. 'meals: 3', this function repeats three times so that there will ultimately be three objects within the mealPrep array)
+// this function repeats to meals key-value (ex. 'meals: 3', this function repeats three times so that there will ultimately be three objects within the mealPrep array)
 const initMealPrep = (prepInfo) => {
   if (!prepInfo.mealPrep) {
     prepInfo.mealPrep = [];
@@ -123,7 +126,7 @@ const initMealPrep = (prepInfo) => {
     });
 
     if (i < prepInfo.meals - 1) {
-      prepInfo = foodPrompt(prepInfo);
+      prepInfo = foodPrompt(prepInfo, i + 1);
     }
   }
 
@@ -131,15 +134,15 @@ const initMealPrep = (prepInfo) => {
 };
 
 // this function repeats if confirmAddFood key-value is true.
-const foodPrompt = (prepInfo) => {
+const foodPrompt = (prepInfo, mealCount) => {
   const lastMeal = prepInfo.mealPrep[prepInfo.mealPrep.length - 1];
-  const mealCount = prepInfo.mealPrep.length;
+  // const mealCount = prepInfo.mealPrep.length;
   
   const questions = [
     {
       type: "input",
       name: "food",
-      message: `add food item for meal #${mealCount}`,
+      message: `add food item for meal #${mealCount}:`,
     },
     {
       type: "confirm",
@@ -153,26 +156,28 @@ const foodPrompt = (prepInfo) => {
       lastMeal.food.push(answers.food);
 
       if (answers.confirmAddFood) {
-        return foodPrompt(prepInfo);
+        return foodPrompt(prepInfo, mealCount);
       }
 
       if (prepInfo.meals > mealCount) {
         prepInfo.mealPrep.push({
           food: []
         });
-        return foodPrompt(prepInfo);
+        return foodPrompt(prepInfo, mealCount + 1);
       }
 
       return prepInfo;
     });
 };
+// error : confirming false results in 'meal #undefined'
 
 // calls
 init()
   .then(prepPrompt)
   .then(initMealPrep)
   .then(foodPrompt)
-  .then((data) => {
-    console.log(data);
-    console.log(data.mealPrep);
+  .then((prepInfo) => {
+    // console.log(prepInfo);
+    // console.log(prepInfo.mealPrep);
+    return generatePage(prepInfo)
   });
