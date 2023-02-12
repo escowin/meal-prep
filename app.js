@@ -181,4 +181,5 @@ init()
     // console.log(prepInfo);
     // console.log(prepInfo.mealPrep);
     return generatePage(prepInfo)
-  });
+  })
+  .then(template => console.log(template));

@@ -1,37 +1,11 @@
 // data.current year
 const copyrightYear = new Date().getFullYear();
 
-const mockData = {
-    name: "mock prep",
-    startDate: "2023.02.08",
-    duration: 3,
-    meals: 3,
-    details: ["cardio", "workout split"],
-    cardio: "rowing/5x week",
-    split: "chest/delts/back/arms/legs",
-    mealPrep: [
-      {
-        food: ["1 egg", "1/2 cup egg whites", "1oz oats"],
-      },
-      {
-        food: ["5oz chicken", "3oz mixed vegies"],
-      },
-      {
-        food: ["1.8oz protein powder", "1 tbsp peanut butter"],
-      },
-      {
-        food: ["6oz white meat", "3oz veggies", "5oz rice"],
-      },
-    ],
-  };
-
 // logic.generate template literal
 const generatePage = (templateData) => {
-    const { mealPrep, ...prepInfo } = templateData
-    // console.log(prepInfo)
-    // console.log(mealPrep)
+  const { mealPrep, ...prepInfo } = templateData;
 
-    return `
+  return `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -44,15 +18,15 @@ const generatePage = (templateData) => {
     <body>
         <header>
             <h1>${prepInfo.name}</h1>
-            <p>${prepInfo.date}</p>
-            <p id="duration">${prepInfo.duration}</p>
+            <p>start date : ${prepInfo.startDate}</p>
+            <p>duration : ${prepInfo.duration} weeks</p>
         </header>
         <main>
             ${generateMealPrepSections(mealPrep)}
         </main>
         <footer>
-            <h3 class="section" id="footer">
-                &copy;${copyrightYear} <a href="#" target="_blank">Edwin m. escobar</a>
+            <h3>
+                &copy;${copyrightYear} <a href="https://github.com/escowin/meal-prepper" target="_blank">Edwin m. escobar</a>
            </h3>
         </footer>
     </body>
@@ -61,19 +35,15 @@ const generatePage = (templateData) => {
 };
 
 const generateMealPrepSections = (mealPrepData) => {
-    let template = '';
+  let template = "";
 
-    mealPrepData.forEach((meal, i) => {
-        template += `<section><h2>meal ${i + 1}</h2><article>`
-        meal.food.forEach(foodItem => template += `<p>${foodItem}</p>`)
-        template += `</article></section>`
-    })
+  mealPrepData.forEach((meal, i) => {
+    template += `<section><h2>meal ${i + 1}</h2><article>`;
+    meal.food.forEach((foodItem) => (template += `<p>${foodItem}</p>`));
+    template += `</article></section>`;
+  });
 
-    console.log(template)
-    return template
-}
+  return template;
+};
 
-generatePage(mockData);
-
-
-// module.exports = generatePage;
+module.exports = generatePage;
