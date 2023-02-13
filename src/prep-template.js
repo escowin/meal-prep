@@ -12,6 +12,7 @@ const generatePage = (templateData) => {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Khula:wght@300&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="./style.css">
         <title>${prepInfo.name}</title>
     </head>
@@ -48,17 +49,6 @@ const formatDuration = (value) => {
   return `${value} week`
 }
 
-const generateCardioSection = (cardioData) => {
-  if (!cardioData) {
-    return "";
-  }
-
-  return `<section id='cardio'>
-          <h2>Cardio</h2>
-          <p>${cardioData}</p>
-        </section>`;
-};
-
 const generateWorkoutSection = (workoutData) => {
   if (!workoutData) {
     return "";
@@ -67,6 +57,17 @@ const generateWorkoutSection = (workoutData) => {
   return `<section id='workout-split'>
           <h2>Workout split</h2>
           <p>${workoutData}</p>
+        </section>`;
+};
+
+const generateCardioSection = (cardioData) => {
+  if (!cardioData) {
+    return "";
+  }
+
+  return `<section id='cardio'>
+          <h2>Cardio</h2>
+          <p>${cardioData}</p>
         </section>`;
 };
 

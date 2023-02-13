@@ -2,40 +2,6 @@ const inquirer = require("inquirer");
 const { writeFile, copyFile } = require('./utils/generate-page');
 const generateTemplate = require("./src/prep-template");
 
-const mockData = {
-  name: "mock prep",
-  startDate: "2023.02.08",
-  duration: 3,
-  meals: 3,
-  details: ["cardio", "workout split"],
-  cardio: "rowing/5x week",
-  split: "chest/delts/back/arms/legs",
-  mealPrep: [
-    {
-      food: ["1 egg", "1/2 cup egg whites", "1oz oats"],
-    },
-    {
-      food: ["5oz chicken", "3oz mixed vegies"],
-    },
-    {
-      food: ["1.8oz protein powder, 1 tbsp peanut butter"],
-    },
-    {
-      food: ["6oz white meat", "3oz veggies", "5oz rice"],
-    },
-  ],
-};
-
-const prepPromptMockData = {
-  name: "mock prep",
-  startDate: "2023.02.08",
-  duration: 3,
-  meals: 3,
-  details: ["cardio", "workout split"],
-  cardio: "rowing/5x week",
-  split: "chest/delts/back/arms/legs",
-};
-
 // logic
 const init = () => {
   let date = new Date().getFullYear();
@@ -154,6 +120,13 @@ const foodPrompt = (prepInfo) => {
       type: "input",
       name: "food",
       message: `add food item for meal #${mealCount}:`,
+      validate: foodInput => {
+        if (!foodInput) {
+          console.log("food item required")
+          return false;
+        }
+        return true;
+      }
     },
     {
       type: "confirm",
