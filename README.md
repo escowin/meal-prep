@@ -36,12 +36,7 @@ n/a
 
 
 ## Screenshots
-![mobile](./images/small/meal-prep.jpg)
-
 ![tablet](./images/medium/meal-prep.jpg)
-
-![desktop](./images/desktop/meal-prep.jpg)
-
 
 ## Author
 ### Edwin M. Ecobar
