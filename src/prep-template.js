@@ -83,7 +83,7 @@ const generateMealPrepSection = (mealPrepData) => {
 
   mealPrepData.forEach((meal, i) => {
     template += ` <article id="meal">
-          <h2>meal ${i + 1}</h2>
+          <h3>meal ${i + 1}</h2>
           <ul id="foods">`;
     meal.food.forEach(
       (foodItem) =>
