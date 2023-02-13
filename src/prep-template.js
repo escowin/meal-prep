@@ -12,7 +12,7 @@ const generatePage = (templateData) => {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="./assets/css/styles.css">
+        <link rel="stylesheet" href="./styles.css">
         <title>${prepInfo.name}</title>
     </head>
     <body>
@@ -22,7 +22,12 @@ const generatePage = (templateData) => {
             <p>duration : ${prepInfo.duration} weeks</p>
         </header>
         <main>
-            ${generateMealPrepSections(mealPrep)}
+            ${generateCardioSection(prepInfo.cardio)}
+            ${generateWorkoutSection(prepInfo.split)}
+            ${generateSupplementsSection(prepInfo.supps)}
+          <section id="meal-prep">
+          ${generateMealPrepSection(mealPrep)}
+          </section>
         </main>
         <footer>
             <h3>
@@ -34,20 +39,56 @@ const generatePage = (templateData) => {
     `;
 };
 
-const generateMealPrepSections = (mealPrepData) => {
+const generateCardioSection = (cardioData) => {
+  if (!cardioData) {
+    return "";
+  }
+
+  return `
+  <section id='cardio'>
+    <p>${cardioData}</p>
+  </section>`;
+};
+
+const generateWorkoutSection = (workoutData) => {
+  if (!workoutData) {
+    return "";
+  }
+
+  return `
+  <section id='cardio'>
+    <p>${workoutData}</p>
+  </section>`;
+};
+
+const generateSupplementsSection = (suppData) => {
+  if (!suppData) {
+    return "";
+  }
+
+  return `
+  <section id='cardio'>
+    <p>${suppData}</p>
+  </section>`;
+};
+
+const generateMealPrepSection = (mealPrepData) => {
   let template = "";
 
   mealPrepData.forEach((meal, i) => {
     template += `
-          <section>
-            <h2>meal ${i + 1}</h2>
-            <article>`;
-    meal.food.forEach((foodItem) => (template += `
-                <p>${foodItem}</p>`));
+      <article>
+        <h2>meal ${i + 1}</h2>
+        <div>`;
+    meal.food.forEach(
+      (foodItem) =>
+        (template += `
+            <p>${foodItem}</p>`)
+    );
     template += `
-            </article>
-          </section>
-        `;
+        </div>
+      </article>
+    `;
   });
 
   return template;

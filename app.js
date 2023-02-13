@@ -59,7 +59,7 @@ const prepPrompt = () => {
       message: "enter prep name:",
       validate: (nameInput) => {
         if (!nameInput) {
-          console.log("enter prep name:");
+          console.log("prep name required");
           return false;
         }
         return true;
@@ -68,7 +68,7 @@ const prepPrompt = () => {
     {
       type: "input",
       name: "startDate",
-      message: "enter start date (yyyy.mm.dd):",
+      message: "enter start date:",
     },
     {
       type: "number",
@@ -79,6 +79,13 @@ const prepPrompt = () => {
       type: "number",
       name: "meals",
       message: "how many meals?",
+      validate: mealsInput => {
+        if (!mealsInput) {
+          console.log("number of meals must be specified")
+          return false;
+        }
+        return true;
+      }
     },
     {
       type: "checkbox",
