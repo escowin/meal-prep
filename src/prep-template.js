@@ -24,8 +24,8 @@ const generatePage = (templateData) => {
         <p class="value">${formatDuration(prepInfo.duration)}</p>
       </header>
       <main>
-        ${generateCardioSection(prepInfo.cardio)}
         ${generateWorkoutSection(prepInfo.split)}
+        ${generateCardioSection(prepInfo.cardio)}
         ${generateSupplementsSection(prepInfo.supps)}
         ${generateMealPrepSection(mealPrep)}
       </main>
@@ -54,6 +54,7 @@ const generateCardioSection = (cardioData) => {
   }
 
   return `<section id='cardio'>
+          <h2>Cardio</h2>
           <p>${cardioData}</p>
         </section>`;
 };
@@ -64,6 +65,7 @@ const generateWorkoutSection = (workoutData) => {
   }
 
   return `<section id='workout-split'>
+          <h2>Workout split</h2>
           <p>${workoutData}</p>
         </section>`;
 };
@@ -73,7 +75,8 @@ const generateSupplementsSection = (suppData) => {
     return "";
   }
 
-  return `<section id='supp'>
+  return `<section id='supplements'>
+          <h2>Supplements</h2>
           <p>${suppData}</p>
         </section>`;
 };
@@ -83,7 +86,7 @@ const generateMealPrepSection = (mealPrepData) => {
 
   mealPrepData.forEach((meal, i) => {
     template += ` <article id="meal">
-          <h3>meal ${i + 1}</h2>
+          <h3>${i + 1}</h2>
           <ul id="foods">`;
     meal.food.forEach(
       (foodItem) =>
