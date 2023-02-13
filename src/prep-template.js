@@ -18,8 +18,10 @@ const generatePage = (templateData) => {
     <body>
       <header>
         <h1>${prepInfo.name}</h1>
-        <p>start date : ${prepInfo.startDate}</p>
-        <p>duration : ${prepInfo.duration} weeks</p>
+        <p class="key">start date</p>
+        <p class="value">${prepInfo.startDate}</p>
+        <p class="key">duration</p>
+        <p class="value">${formatDuration(prepInfo.duration)}</p>
       </header>
       <main>
         ${generateCardioSection(prepInfo.cardio)}
@@ -29,13 +31,22 @@ const generatePage = (templateData) => {
       </main>
       <footer>
         <h3>
-          &copy;${copyrightYear} <a href="https://github.com/escowin/meal-prep" target="_blank">Edwin m. escobar</a>
+          <a href="https://github.com/escowin/meal-prep" target="_blank">meal-prep</a>
+          &copy;${copyrightYear} Edwin m. escobar
         </h3>
       </footer>
     </body>
     </html>
     `;
 };
+
+// plural & singular is dependent on a dynamic number value
+const formatDuration = (value) => {
+  if (value !== 1) {
+    return `${value} weeks`
+  }
+  return `${value} week`
+}
 
 const generateCardioSection = (cardioData) => {
   if (!cardioData) {

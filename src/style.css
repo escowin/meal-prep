@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* outline: 1px dotted blue; */
+    outline: 1px dotted blue;
 }
 
 /* box */
@@ -16,13 +16,25 @@ body {
 
 header {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 1fr auto auto;
+    grid-template-areas: 
+    "a b"
+    "a c";
     padding: 1rem .5rem;
     gap: .25rem 1rem
 }
 
 h1 {
-    grid-row: span 2;
+    grid-area: a;
+    border-right: 1px solid rgb(0, 0, 0);
+}
+
+.duration {
+    grid-area: b;
+}
+
+.start {
+    grid: c;
 }
 
 main {
@@ -34,8 +46,13 @@ main {
 
 section {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 1fr 2fr;
     gap: 1rem;
+}
+
+/* lists */
+#foods {
+    list-style: none;
 }
 
 /* typography */
