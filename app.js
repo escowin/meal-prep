@@ -6,7 +6,7 @@ const generateTemplate = require("./src/prep-template");
 const init = () => {
   let date = new Date().getFullYear();
   // returns a string via promise object
-  return Promise.resolve(`
+  return Promise.resolve(console.log(`
   ·················································
   ·                                               ·
   ·               meal prep v1.0.0                ·
@@ -14,7 +14,7 @@ const init = () => {
   ·     https://github.com/escowin/meal-prep      ·
   ·                                               ·
   ·················································
-  `);
+  `));
 };
 
 const prepPrompt = () => {
