@@ -12,28 +12,26 @@ const generatePage = (templateData) => {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="./styles.css">
+        <link rel="stylesheet" href="./style.css">
         <title>${prepInfo.name}</title>
     </head>
     <body>
-        <header>
-            <h1>${prepInfo.name}</h1>
-            <p>start date : ${prepInfo.startDate}</p>
-            <p>duration : ${prepInfo.duration} weeks</p>
-        </header>
-        <main>
-            ${generateCardioSection(prepInfo.cardio)}
-            ${generateWorkoutSection(prepInfo.split)}
-            ${generateSupplementsSection(prepInfo.supps)}
-          <section id="meal-prep">
-          ${generateMealPrepSection(mealPrep)}
-          </section>
-        </main>
-        <footer>
-            <h3>
-                &copy;${copyrightYear} <a href="https://github.com/escowin/meal-prep" target="_blank">Edwin m. escobar</a>
-           </h3>
-        </footer>
+      <header>
+        <h1>${prepInfo.name}</h1>
+        <p>start date : ${prepInfo.startDate}</p>
+        <p>duration : ${prepInfo.duration} weeks</p>
+      </header>
+      <main>
+        ${generateCardioSection(prepInfo.cardio)}
+        ${generateWorkoutSection(prepInfo.split)}
+        ${generateSupplementsSection(prepInfo.supps)}
+        ${generateMealPrepSection(mealPrep)}
+      </main>
+      <footer>
+        <h3>
+          &copy;${copyrightYear} <a href="https://github.com/escowin/meal-prep" target="_blank">Edwin m. escobar</a>
+        </h3>
+      </footer>
     </body>
     </html>
     `;
@@ -44,10 +42,9 @@ const generateCardioSection = (cardioData) => {
     return "";
   }
 
-  return `
-  <section id='cardio'>
-    <p>${cardioData}</p>
-  </section>`;
+  return `<section id='cardio'>
+          <p>${cardioData}</p>
+        </section>`;
 };
 
 const generateWorkoutSection = (workoutData) => {
@@ -55,10 +52,9 @@ const generateWorkoutSection = (workoutData) => {
     return "";
   }
 
-  return `
-  <section id='cardio'>
-    <p>${workoutData}</p>
-  </section>`;
+  return `<section id='workout-split'>
+          <p>${workoutData}</p>
+        </section>`;
 };
 
 const generateSupplementsSection = (suppData) => {
@@ -66,32 +62,32 @@ const generateSupplementsSection = (suppData) => {
     return "";
   }
 
-  return `
-  <section id='cardio'>
-    <p>${suppData}</p>
-  </section>`;
+  return `<section id='supp'>
+          <p>${suppData}</p>
+        </section>`;
 };
 
 const generateMealPrepSection = (mealPrepData) => {
   let template = "";
 
   mealPrepData.forEach((meal, i) => {
-    template += `
-      <article>
-        <h2>meal ${i + 1}</h2>
-        <div>`;
+    template += ` <article id="meal">
+          <h2>meal ${i + 1}</h2>
+          <ul id="foods">`;
     meal.food.forEach(
       (foodItem) =>
         (template += `
-            <p>${foodItem}</p>`)
+            <li>${foodItem}</li>`)
     );
     template += `
-        </div>
-      </article>
-    `;
+          </ul>
+         </article>
+        `;
   });
 
-  return template;
+  return `<section id="meal-prep">
+        ${template}
+      </section>`;
 };
 
 module.exports = generatePage;
