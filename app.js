@@ -7,13 +7,13 @@ const init = () => {
   let date = new Date().getFullYear();
   // returns a string via promise object
   return Promise.resolve(console.log(`
-  ·················································
-  ·                                               ·
-  ·               meal prep v1.0.0                ·
-  ·            © ${date} edwin m. escobar            ·
-  ·     https://github.com/escowin/meal-prep      ·
-  ·                                               ·
-  ·················································
+    ·················································
+    ·                                               ·
+    ·               meal prep v1.0.0                ·
+    ·            © ${date} edwin m. escobar            ·
+    ·     https://github.com/escowin/meal-prep      ·
+    ·                                               ·
+    ·················································
   `));
 };
 
@@ -57,26 +57,67 @@ const prepPrompt = () => {
       type: "checkbox",
       name: "details",
       message: "select additional details to add:",
-      choices: ["supplements", "cardio", "workout split"],
+      choices: ["supplements", "cardio", "workout split", "cheat day", "current weight"],
     },
     {
       type: "input",
       name: "supps",
-      message: "enter supp:",
+      message: "enter supplements:",
+      validate: input => {
+        if (!input) {
+          console.log("supplements required")
+          return false;
+        }
+        return true;
+      },
       when: (answers) => answers.details.includes("supplements"),
     },
     {
       type: "input",
       name: "cardio",
       message: "enter cardio:",
+      validate: input => {
+        if (!input) {
+          console.log("cardio required")
+          return false;
+        }
+        return true;
+      },
       when: (answers) => answers.details.includes("cardio"),
     },
     {
       type: "input",
       name: "split",
       message: "enter workout split:",
+      validate: input => {
+        if (!input) {
+          console.log("workout split required")
+          return false;
+        }
+        return true;
+      },
       when: (answers) => answers.details.includes("workout split"),
     },
+    {
+      type: "list",
+      name: "cheatday",
+      message: "select cheat day:",
+      choices: ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"],
+      when: (answers) => answers.details.includes("cheat day"),
+    },
+    {
+      type: 'input',
+      name: "weight",
+      message: "enter current weight:",
+      validate: input => {
+        if (!input) {
+          console.log("current weight required")
+          return false;
+        }
+        return true;
+      },
+      when: (answers) => answers.details.includes("current weight"),
+    }
   ]);
 };
 

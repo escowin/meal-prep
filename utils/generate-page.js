@@ -19,7 +19,7 @@ const writeFile = (fileContent) => {
       // if all is well, the promise is resolved & it'll send the data to the .then() method
       resolve({
         ok: true,
-        message: "file created. checkout ./dist/index.html",
+        message: "prep successfully saved to ./dist/index.html",
       });
     });
   });
@@ -35,7 +35,7 @@ const copyFile = () => {
       }
       resolve({
         ok: true,
-        message: "style sheet successfully copied.",
+        message: "stylesheet successfully copied.",
       });
     });
   });
