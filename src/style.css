@@ -64,7 +64,7 @@ section {
     grid-template-columns: 10rem auto;
     gap: .5rem;
     grid-auto-rows: minmax(0, auto);
-    align-items: end;
+    align-items: baseline;
 }
 
 h2 {
@@ -87,6 +87,7 @@ footer {
     display: flex;
     justify-content: center;
     text-align: center;
+    color: var(--accent);
 }
 
 /* lists */
@@ -109,4 +110,15 @@ a {
 
 a:hover {
     color: var(--link);
+}
+
+
+@media print {
+    main {
+        flex-grow: initial;
+    }
+
+    footer {
+        margin-top: auto;
+    }
 }
