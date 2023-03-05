@@ -74,7 +74,8 @@ h3 {
     height: fit-content;
 }
 
-p, #meal {
+p,
+#meal {
     padding-left: 1rem;
 }
 
@@ -114,13 +115,11 @@ a:hover {
     color: var(--link);
 }
 
-
-
 @media screen and (min-width: 1024px) {
     main {
         gap: .5rem;
     }
-    
+
     header {
         grid-template-columns: 1fr auto auto;
         grid-template-areas:
@@ -132,22 +131,29 @@ a:hover {
     section {
         display: grid;
         grid-template-columns: 10rem auto;
-        grid-auto-rows: minmax(0, auto);
         gap: .5rem;
     }
 
-    p, #meal {
+    p,
+    #meal {
         padding-left: 0;
     }
 }
 
 @media print {
     body {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
     }
 
     main {
         flex-grow: initial;
+    }
+
+    section {
+        display: grid;
+        grid-template-columns: 12.5rem auto;
+        gap: 1rem;
+        justify-content: flex-start;
     }
 
     footer {
