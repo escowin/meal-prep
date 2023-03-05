@@ -19,7 +19,7 @@ const writeFile = (fileContent) => {
       // if all is well, the promise is resolved & it'll send the data to the .then() method
       resolve({
         ok: true,
-        message: "prep successfully saved to ./dist/index.html",
+        message: "file successfully saved to ./dist/index.html",
       });
     });
   });

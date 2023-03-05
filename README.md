@@ -5,30 +5,28 @@
 [Repo](https://github.com/esowin/meal-prep)
 
 
-node app captures cli input & generates a corresponding html file.
+a node app for meal prepping. answering the prompts will generate a nicely formatted html file.
 
 ## Table of Contents
 - [Installation](#installation)
 - [Code](#code)
-- [Test](#test)
 - [Screenshots](#screenshots)
-
 - [Author](#author)
 
 ## Installation
-Run the following command to install necessary dependencies:
+Open up the terminal, and navigate to the root directory of the app. an example
 ```
-$ npm i; node app;
+$ cd meal-prep/
 ```
 
-## Test
-Run the following command to run tests:
+
+From there, enter the following command:
 ```
-n/a
+$ npm i; npm start
 ```
 
 ## Code
-- Languages: CSS, Javascript
+- Languages: Javascript, CSS
 
 - Frameworks: Node
 
