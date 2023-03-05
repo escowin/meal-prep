@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
 const { writeFile, copyFile } = require('./utils/generate-page');
 const generateTemplate = require("./src/prep-template");
+const { version } = require("./package.json")
 
 // logic
 const init = () => {
@@ -9,7 +10,7 @@ const init = () => {
   return Promise.resolve(console.log(`
     ·················································
     ·                                               ·
-    ·               meal prep v1.0.1                ·
+    ·               meal prep v${version}                ·
     ·            © ${date} edwin m. escobar            ·
     ·     https://github.com/escowin/meal-prep      ·
     ·                                               ·
