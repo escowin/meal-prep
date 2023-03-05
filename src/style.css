@@ -26,10 +26,11 @@ body {
 header {
     display: grid;
     grid-template-columns: 1fr auto auto;
+    grid-template-columns: repeat(3, 1fr);
     grid-template-areas:
-        "a b b"
-        "a c c";
-    gap: .25rem 1rem;
+        "a a a"
+        "b b b"
+        "c c c";
     padding: var(--section-padding);
     border-bottom: var(--border);
     border-left: var(--border);
@@ -52,7 +53,6 @@ main {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    gap: .5rem;
     border-top: var(--border);
     border-bottom: var(--border);
     border-left: var(--border);
@@ -60,10 +60,8 @@ main {
 }
 
 section {
-    display: grid;
-    grid-template-columns: 10rem auto;
-    gap: .5rem;
-    grid-auto-rows: minmax(0, auto);
+    display: flex;
+    flex-direction: column;
     align-items: baseline;
 }
 
@@ -74,6 +72,10 @@ h2 {
 h3 {
 
     height: fit-content;
+}
+
+p, #meal {
+    padding-left: 1rem;
 }
 
 #meal {
@@ -113,12 +115,43 @@ a:hover {
 }
 
 
+
+@media screen and (min-width: 1024px) {
+    main {
+        gap: .5rem;
+    }
+    
+    header {
+        grid-template-columns: 1fr auto auto;
+        grid-template-areas:
+            "a b b"
+            "a c c";
+        gap: .25rem 1rem;
+    }
+
+    section {
+        display: grid;
+        grid-template-columns: 10rem auto;
+        grid-auto-rows: minmax(0, auto);
+        gap: .5rem;
+    }
+
+    p, #meal {
+        padding-left: 0;
+    }
+}
+
 @media print {
+    body {
+        font-size: 1.75rem;
+    }
+
     main {
         flex-grow: initial;
     }
 
     footer {
+        font-size: 75%;
         margin-top: auto;
     }
 }
