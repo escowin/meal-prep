@@ -9,7 +9,7 @@ const init = () => {
   return Promise.resolve(console.log(`
     ·················································
     ·                                               ·
-    ·               meal prep v1.0.0                ·
+    ·               meal prep v1.0.1                ·
     ·            © ${date} edwin m. escobar            ·
     ·     https://github.com/escowin/meal-prep      ·
     ·                                               ·
