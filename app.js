@@ -1,13 +1,15 @@
 const inquirer = require("inquirer");
-const { writeFile, copyFile } = require('./utils/generate-page');
+const { writeFile, copyFile } = require("./utils/generate-page");
 const generateTemplate = require("./src/prep-template");
-const { version } = require("./package.json")
+const { version } = require("./package.json");
+const { prepQuestions, mealQuestions } = require("./lib/questions");
 
 // logic
 const init = () => {
   let date = new Date().getFullYear();
   // returns a string via promise object
-  return Promise.resolve(console.log(`
+  return Promise.resolve(
+    console.log(`
     ·················································
     ·                                               ·
     ·               meal prep v${version}                ·
@@ -15,111 +17,12 @@ const init = () => {
     ·     https://github.com/escowin/meal-prep      ·
     ·                                               ·
     ·················································
-  `));
+  `)
+  );
 };
 
 const prepPrompt = () => {
-  return inquirer.prompt([
-    {
-      type: "input",
-      name: "name",
-      message: "enter prep name:",
-      validate: (nameInput) => {
-        if (!nameInput) {
-          console.log("prep name required");
-          return false;
-        }
-        return true;
-      },
-    },
-    {
-      type: "input",
-      name: "startDate",
-      message: "enter start date:",
-    },
-    {
-      type: "number",
-      name: "duration",
-      message: "how many weeks?",
-    },
-    {
-      type: "number",
-      name: "meals",
-      message: "how many meals?",
-      validate: mealsInput => {
-        if (!mealsInput) {
-          console.log("number of meals must be specified")
-          return false;
-        }
-        return true;
-      }
-    },
-    {
-      type: "checkbox",
-      name: "details",
-      message: "select additional details to add:",
-      choices: ["supplements", "cardio", "workout split", "cheat day", "current weight"],
-    },
-    {
-      type: "input",
-      name: "supps",
-      message: "enter supplements:",
-      validate: input => {
-        if (!input) {
-          console.log("supplements required")
-          return false;
-        }
-        return true;
-      },
-      when: (answers) => answers.details.includes("supplements"),
-    },
-    {
-      type: "input",
-      name: "cardio",
-      message: "enter cardio:",
-      validate: input => {
-        if (!input) {
-          console.log("cardio required")
-          return false;
-        }
-        return true;
-      },
-      when: (answers) => answers.details.includes("cardio"),
-    },
-    {
-      type: "input",
-      name: "split",
-      message: "enter workout split:",
-      validate: input => {
-        if (!input) {
-          console.log("workout split required")
-          return false;
-        }
-        return true;
-      },
-      when: (answers) => answers.details.includes("workout split"),
-    },
-    {
-      type: "list",
-      name: "cheatday",
-      message: "select cheat day:",
-      choices: ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"],
-      when: (answers) => answers.details.includes("cheat day"),
-    },
-    {
-      type: 'input',
-      name: "weight",
-      message: "enter current weight:",
-      validate: input => {
-        if (!input) {
-          console.log("current weight required")
-          return false;
-        }
-        return true;
-      },
-      when: (answers) => answers.details.includes("current weight"),
-    }
-  ]);
+  return inquirer.prompt(prepQuestions);
 };
 
 const initMealPrep = (prepInfo) => {
@@ -138,14 +41,14 @@ const initMealPrep = (prepInfo) => {
 
     // pushes an object with a food array into meal prep
     prepInfo.mealPrep.push({
-      food: []
+      food: [],
     });
 
     // returns updated prepInfo object once the index value matches the amount of meals in the prep
-    if (i = prepInfo.meals - 1) {
+    if ((i = prepInfo.meals - 1)) {
       return prepInfo;
     } else if (i < prepInfo.meals - 1) {
-      // if less than that, the food prompt is called to add to prepInfo 
+      // if less than that, the food prompt is called to add to prepInfo
       prepInfo = foodPrompt(prepInfo);
     }
   }
@@ -156,60 +59,39 @@ const initMealPrep = (prepInfo) => {
 const foodPrompt = (prepInfo) => {
   const lastMeal = prepInfo.mealPrep[prepInfo.mealPrep.length - 1];
   const mealCount = prepInfo.mealPrep.length;
-  
-  const questions = [
-    {
-      type: "input",
-      name: "food",
-      message: `add food item for meal #${mealCount}:`,
-      validate: foodInput => {
-        if (!foodInput) {
-          console.log("food item required")
-          return false;
-        }
-        return true;
-      }
-    },
-    {
-      type: "confirm",
-      name: "confirmAddFood",
-      message: "add another food item?",
-    },
-  ];
 
-  return inquirer.prompt(questions)
-    .then((answers) => {
-      lastMeal.food.push(answers.food);
+  return inquirer.prompt(mealQuestions).then((answers) => {
+    lastMeal.food.push(answers.food);
 
-      if (answers.confirmAddFood) {
-        return foodPrompt(prepInfo);
-      }
+    if (answers.confirmAddFood) {
+      return foodPrompt(prepInfo);
+    }
 
-      if (prepInfo.meals > mealCount) {
-        prepInfo.mealPrep.push({
-          food: []
-        });
-        return foodPrompt(prepInfo);
-      }
+    if (prepInfo.meals > mealCount) {
+      prepInfo.mealPrep.push({
+        food: [],
+      });
+      return foodPrompt(prepInfo);
+    }
 
-      return prepInfo;
-    });
+    return prepInfo;
+  });
 };
 
-// calls | chaining .then() method for legibility 
+// calls | chaining .then() method for legibility
 init()
   .then(prepPrompt)
   .then(initMealPrep)
   .then(foodPrompt)
   .then((prepInfo) => {
-    return generateTemplate(prepInfo)
+    return generateTemplate(prepInfo);
   })
-  .then(template => {
-    return writeFile(template)
+  .then((template) => {
+    return writeFile(template);
   })
-  .then(writeFileResponse => {
-    console.log(writeFileResponse)
+  .then((writeFileResponse) => {
+    console.log(writeFileResponse);
     return copyFile();
   })
-  .then(copyFileResponse => console.log(copyFileResponse))
-  .catch(err => console.log(err));
+  .then((copyFileResponse) => console.log(copyFileResponse))
+  .catch((err) => console.log(err));
