@@ -4,10 +4,17 @@ const capitalizeFirstLetter = (string) => {
   
 // plural & singular is dependent on a dynamic number value
 const formatDuration = (value) => {
-  if (value !== 1) {
-    return `${value} weeks`;
-  }
-  return `${value} week`;
+  (value !== 1) ? `${value} weeks` : `${value} week`
+  // if (value !== 1) {
+  //   return `${value} weeks`;
+  // }
+  // return `${value} week`;
 };
 
-module.exports = { capitalizeFirstLetter, formatDuration };
+// returns current date as "YYYY-MM-DD"
+const getDate = () => {
+  const date = new Date().toISOString()
+  return date.split("T")[0]
+}
+
+module.exports = { capitalizeFirstLetter, formatDuration, getDate };

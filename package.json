@@ -4,7 +4,7 @@
   "description": "the node way to meal prep",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node app.js"
   },
   "repository": {
@@ -17,7 +17,10 @@
     "url": "https://github.com/escowin/meal-prep/issues"
   },
   "homepage": "https://github.com/escowin/meal-prep#readme",
+  "devDependencies": {
+    "jest": "^29.6.4"
+  },
   "dependencies": {
-    "inquirer": "^8.2.4"
+    "inquirer": "^8.2.6"
   }
 }
