@@ -96,7 +96,7 @@ const foodPrompt = (prepInfo) => {
 // calls | chaining .then() method for legibility
 init()
   .then(prepPrompt)
-  // .then(initMealPrep)
+  .then(mealPrepPrompt)
   // .then(foodPrompt)
   // .then((prepInfo) => {
   //   return generateTemplate(prepInfo);
