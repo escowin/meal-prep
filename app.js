@@ -2,13 +2,20 @@ const inquirer = require("inquirer");
 const { writeFile, copyFile } = require("./utils/generate-page");
 const generateTemplate = require("./src/prep-template");
 const { version } = require("./package.json");
-const { prepQuestions, mealQuestions, foodQuestions } = require("./lib/questions");
+const {
+  prepQuestions,
+  mealQuestions,
+  foodQuestions,
+} = require("./lib/questions");
+const { mockPrep } = require("./lib/mockData");
+const { arrayGen } = require("./utils/helpers");
 
 // logic
 const init = () => {
   let date = new Date().getFullYear();
   // returns a string via promise object
-  return Promise.resolve(console.log(`
+  return Promise.resolve(
+    console.log(`
     ·················································
     ·                                               ·
     ·               meal prep v${version}                ·
@@ -16,46 +23,56 @@ const init = () => {
     ·     https://github.com/escowin/meal-prep      ·
     ·                                               ·
     ·················································
-  `));
+  `)
+  );
 };
 
 const prepPrompt = () => {
-  return inquirer.prompt(prepQuestions);
+  return mockPrep;
+  // return inquirer.prompt(prepQuestions);
 };
 
 const mealPrepPrompt = (prepInfo) => {
-  console.log(prepInfo)
   // initializes the mealPrep array on the first pass
   if (!prepInfo.mealPrep) {
-    prepInfo.mealPrep = [];
+    prepInfo.mealsArr = [];
+    arrayGen(prepInfo.meals, prepInfo.mealsArr);
   }
-  console.log(prepInfo)
 
   // loops through equal to the amount of meals in the prep
-  for (let i = 0; i < prepInfo.meals; i++) {
-    console.log(`
-    ·················································
-    ·                   meal prep                   ·
-    ·················································
-    `);
+  prepInfo.mealsArr.forEach((meal, i) => {
+    if (!prepInfo.mealsArr[i].food) {
+      prepInfo.mealsArr[i].food = [];
+    }
+    // bug: logs multiple meals, answering questions pushes food object value to all
+    console.log(`    ·                    meal ${i + 1}                     ·`);
+    inquirer.prompt(mealQuestions).then((answer) => {
+      arrayGen(answer.mealLength, prepInfo.mealsArr[i].food);
+      console.log(prepInfo.mealsArr[i]);
+    });
+    console.log(meal)
+  });
 
-    // pushes an object with a food array into meal prep
-    prepInfo.mealPrep.push({ food: [] });
+  // for (let i = 0; i < prepInfo.meals; i++) {
+  //   console.log(`    ·                    meal ${i+1}                     ·`)
 
-    // returns updated prepInfo object once the index value matches the amount of meals in the prep
-    // (i = prepInfo.meals - 1) ? prepInfo : (prepInfo = foodPrompt(prepInfo));
+  //   // pushes an object with a food array into meal prep
+  //   prepInfo.mealPrep.push({ food: [] });
 
-    return prepInfo;
-  }
+  //   // returns updated prepInfo object once the index value matches the amount of meals in the prep
+  //   // (i = prepInfo.meals - 1) ? prepInfo : (prepInfo = foodPrompt(prepInfo));
+
+  //   return prepInfo;
+  // }
 };
 
 const foodPrompt = (prepInfo) => {
-  console.log(prepInfo)
+  console.log(prepInfo);
   const lastMeal = prepInfo.mealPrep[prepInfo.mealPrep.length - 1];
   const mealCount = prepInfo.mealPrep.length;
 
   return inquirer.prompt(mealLength).then((answers) => {
-    console.log(answers)
+    console.log(answers);
     const foodCount = answers.mealLength;
 
     for (let i = 0; i < foodCount; i++) {
@@ -94,19 +111,17 @@ const foodPrompt = (prepInfo) => {
 };
 
 // calls | chaining .then() method for legibility
-init()
-  .then(prepPrompt)
-  .then(mealPrepPrompt)
-  // .then(foodPrompt)
-  // .then((prepInfo) => {
-  //   return generateTemplate(prepInfo);
-  // })
-  // .then((template) => {
-  //   return writeFile(template);
-  // })
-  // .then((writeFileResponse) => {
-  //   console.log(writeFileResponse);
-  //   return copyFile();
-  // })
-  // .then((copyFileResponse) => console.log(copyFileResponse))
-  // .catch((err) => console.log(err));
+init().then(prepPrompt).then(mealPrepPrompt);
+// .then(foodPrompt)
+// .then((prepInfo) => {
+//   return generateTemplate(prepInfo);
+// })
+// .then((template) => {
+//   return writeFile(template);
+// })
+// .then((writeFileResponse) => {
+//   console.log(writeFileResponse);
+//   return copyFile();
+// })
+// .then((copyFileResponse) => console.log(copyFileResponse))
+// .catch((err) => console.log(err));
