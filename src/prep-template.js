@@ -5,43 +5,44 @@ const copyrightYear = new Date().getFullYear();
 
 // logic.generate template literal
 const generatePage = (templateData) => {
-  const { mealPrep, ...prepInfo } = templateData;
+  const { mealsArr, ...prepInfo } = templateData;
+  console.log(mealsArr, prepInfo)
 
-  return `
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link href="https://fonts.googleapis.com/css2?family=Khula:wght@300&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="./style.css">
-      <title>${capitalizeFirstLetter(prepInfo.name)}</title>
-  </head>
-  <body>
-    <header>
-      <h1>${capitalizeFirstLetter(prepInfo.name)}</h1>
-      <p class="key">start date</p>
-      <p class="value">${prepInfo.startDate}</p>
-      <p class="key">duration</p>
-      <p class="value">${formatDuration(prepInfo.duration)}</p>
-      ${generateWeightDetails(prepInfo.weight)}
-    </header>
-    <main>
-      ${generateWorkoutSection(prepInfo.split)}
-      ${generateCardioSection(prepInfo.cardio)}
-      ${generateSupplementsSection(prepInfo.supps)}
-      ${generateCheatDaySection(prepInfo.cheatday)}
-      ${generateMealPrepSection(mealPrep)}
-    </main>
-    <footer>
-      <h3>
-        <a href="https://github.com/escowin/meal-prep" target="_blank">meal-prep</a>
-        &copy;${copyrightYear} Edwin m. escobar
-      </h3>
-    </footer>
-  </body>
-</html>`;
+//   return `
+// <!DOCTYPE html>
+// <html lang="en">
+//   <head>
+//       <meta charset="UTF-8">
+//       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+//       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//       <link href="https://fonts.googleapis.com/css2?family=Khula:wght@300&display=swap" rel="stylesheet">
+//       <link rel="stylesheet" href="./style.css">
+//       <title>${capitalizeFirstLetter(prepInfo.name)}</title>
+//   </head>
+//   <body>
+//     <header>
+//       <h1>${capitalizeFirstLetter(prepInfo.name)}</h1>
+//       <p class="key">start date</p>
+//       <p class="value">${prepInfo.startDate}</p>
+//       <p class="key">duration</p>
+//       <p class="value">${formatDuration(prepInfo.duration)}</p>
+//       ${generateWeightDetails(prepInfo.weight)}
+//     </header>
+//     <main>
+//       ${generateWorkoutSection(prepInfo.split)}
+//       ${generateCardioSection(prepInfo.cardio)}
+//       ${generateSupplementsSection(prepInfo.supps)}
+//       ${generateCheatDaySection(prepInfo.cheatday)}
+//       ${generateMealPrepSection(mealPrep)}
+//     </main>
+//     <footer>
+//       <h3>
+//         <a href="https://github.com/escowin/meal-prep" target="_blank">meal-prep</a>
+//         &copy;${copyrightYear} Edwin m. escobar
+//       </h3>
+//     </footer>
+//   </body>
+// </html>`;
 };
 
 const generateWeightDetails = (weightData) => {

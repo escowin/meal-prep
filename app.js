@@ -24,8 +24,7 @@ const init = () => {
 };
 
 const prepPrompt = () => {
-  // const prep = inquirer.prompt(prepQ)
-  const prep = mockPrep;
+  const prep = inquirer.prompt(prepQ)
   arrayGen(prep.meals, (prep.mealsArr = []));
   return prep;
 };
@@ -41,38 +40,27 @@ const mealPrompt = async (prep) => {
   }
 
   console.log("all meals have been prepped");
+  return prep;
 };
 
 const foodPrompt = async (prep, index) => {
-  console.log(`
-  meal ${index+1}: prep.mealsArr[${index}] { num: ${prep.mealsArr[index].num}, food: [] }
-  `)
-
   for (let i = 0; i < prep.mealsArr[index].num; i++) {
     // prompts the user to 'enter food item'
     const answer = await new Promise((resolve, reject) => {
-      inquirer.prompt(foodQ).then(resolve).catch(reject)
-    })
-    console.log(answer)
+      inquirer.prompt(foodQ).then(resolve).catch(reject);
+    });
     // the 'answer.food' string value is then pushed into this indexed object's 'food' array
-    prep.mealsArr[index].food.push(answer.food)
-
-    // the prompt will repeat as long as i is less than the 'num' value 
+    prep.mealsArr[index].food.push(answer.food);
   }
   // this indexed object's food array should now contain an amount of (string) objects equal to this object's 'num' value
-  console.log(prep.mealsArr[index].food)
-
-  console.log(`
-  the loop has completed, the same process will repeat for meal ${index+2}: mealsArr[${index+1}]
-  `)
 };
 
 // calls | chaining .then() method for legibility
-init().then(prepPrompt).then(mealPrompt);
-// .then(foodPrompt)
-// .then((prepInfo) => {
-//   return generateTemplate(prepInfo);
-// })
+init()
+  // .then(prepPrompt)
+  // .then(mealPrompt)
+  // .then((prep) => generateTemplate(prep))
+  .then(() => generateTemplate(mockPrep));
 // .then((template) => {
 //   return writeFile(template);
 // })
