@@ -2,11 +2,7 @@ const inquirer = require("inquirer");
 const { writeFile, copyFile } = require("./utils/generate-page");
 const generateTemplate = require("./src/prep-template");
 const { version } = require("./package.json");
-const {
-  prepQuestions,
-  mealQuestion,
-  foodQuestions,
-} = require("./lib/questions");
+const { prepQ, mealQ, foodQ } = require("./lib/questions");
 const { mockPrep } = require("./lib/mockData");
 const { arrayGen } = require("./utils/helpers");
 
@@ -28,7 +24,7 @@ const init = () => {
 };
 
 const prepPrompt = () => {
-  // const prep = inquirer.prompt(prepQuestions)
+  // const prep = inquirer.prompt(prepQ)
   const prep = mockPrep;
   arrayGen(prep.meals, (prep.mealsArr = []));
   return prep;
@@ -38,7 +34,7 @@ const mealPrompt = async (prep) => {
   for (let i = 0; i < prep.mealsArr.length; i++) {
     console.log(`meal ${i + 1}`);
     // await ensures question is asked once per meal
-    const answer = await inquirer.prompt(mealQuestion);
+    const answer = await inquirer.prompt(mealQ);
     prep.mealsArr[i] = { num: answer.num, food: [] };
     foodPrompt(prep, i);
   }
@@ -46,10 +42,20 @@ const mealPrompt = async (prep) => {
   console.log("all meals have been prepped");
 };
 
-const foodPrompt = (data, index) => {
-  console.log("now in foodPrompt()");
-  console.log(data);
-  console.log(index);
+const foodPrompt = async (prep, index) => {
+  console.log(`
+  current: prep.mealsArr[${index}] { num: ${prep.mealsArr[index].num}, food: [] }
+  - prompt 'enter food item' x${prep.mealsArr[index].num} bc 'num'
+  - push answers into this object's 'food' array
+  - then move on to the next indexed object, mealsArr[${index+1}]]
+  `)
+
+
+  // for (let i = 0; i < prep.mealsArr[index].num; i++) {
+  //   console.log(prep.mealsArr[index].num)
+  //   // const answer = await inquirer.prompt(foodQ);
+  //   // console.log(answer);
+  // }
 
   // const lastMeal = prepInfo.mealPrep[prepInfo.mealPrep.length - 1];
   // const mealCount = prepInfo.mealPrep.length;
@@ -60,7 +66,7 @@ const foodPrompt = (data, index) => {
 
   //   for (let i = 0; i < foodCount; i++) {
   //     console.log(`meal prep`);
-  //     return inquirer.prompt(mealQuestions).then((foodAnswers) => {
+  //     return inquirer.prompt(mealQs).then((foodAnswers) => {
   //       lastMeal.food.push(foodAnswers.food);
   //       if (i < foodCount - 1) {
   //         return foodPrompt(prepInfo);
@@ -75,7 +81,7 @@ const foodPrompt = (data, index) => {
   //     });
   //   }
   // });
-  // return inquirer.prompt(mealQuestions).then((answers) => {
+  // return inquirer.prompt(mealQs).then((answers) => {
   //   lastMeal.food.push(answers.food);
 
   //   if (answers.confirmAddFood) {
