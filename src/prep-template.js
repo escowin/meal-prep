@@ -6,7 +6,7 @@ const {
 
 // logic.generate template literal
 function generatePage(templateData) {
-  const { mealsArr, ...prepInfo } = templateData;
+  const { meals, ...prepInfo } = templateData;
 
   return `
 <!DOCTYPE html>
@@ -22,10 +22,14 @@ function generatePage(templateData) {
   <body>
     <header>
       <h1>${capitalizeFirstWord(prepInfo.name)}</h1>
-      <p class="key">start date</p>
-      <p class="value">${prepInfo.startDate}</p>
-      <p class="key">duration</p>
-      <p class="value">${formatDuration(prepInfo.duration)}</p>
+      <div>
+        <p class="key">start date</p>
+        <p class="value">${prepInfo.startDate}</p>
+      </div>
+      <div>
+        <p class="key">duration</p>
+        <p class="value">${formatDuration(prepInfo.duration)}</p>
+      </div>
       ${generateWeightDetails(prepInfo.weight)}
     </header>
     <main>
@@ -33,12 +37,12 @@ function generatePage(templateData) {
       ${generateCardioSection(prepInfo.cardio)}
       ${generateSupplementsSection(prepInfo.supps)}
       ${generateCheatDaySection(prepInfo.cheatday)}
-      ${generateMealPrepSection(mealsArr)}
+      ${generateMealPrepSection(meals)}
     </main>
     <footer>
       <h3>
         <a href="https://github.com/escowin/meal-prep" target="_blank">meal-prep</a>
-        &copy;${year} Edwin m. escobar
+        &copy;${year} edwin m. escobar
       </h3>
     </footer>
   </body>
@@ -46,9 +50,9 @@ function generatePage(templateData) {
 }
 
 function generateWeightDetails(weightData) {
-  return weightData
+  return !weightData
     ? ""
-    : `<p class='key'>weight</p><p class='value'>${weightData}</p>`;
+    : `<div><p class='key'>weight</p><p class='value'>${weightData}</p></div>`;
 }
 
 function generateWorkoutSection(workoutData) {
@@ -91,13 +95,13 @@ function generateMealPrepSection(meals) {
   let template = "";
 
   meals.forEach((meal, i) => {
-    template += `<article id="meal">
-      <h3>${i + 1}</h3>
+    template += `<article class="meal">
+      <h3>meal ${i + 1}</h3>
       <ul id="foods">${generateFoodItems(meal.food)}</ul>
     </article>`;
   });
 
-  return `<section id="meal-prep"><h2>Meal prep</h2>${template}</section>`;
+  return `<section id="meal-prep"><h2>Food</h2>${template}</section>`;
 }
 
 function generateFoodItems(food) {

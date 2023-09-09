@@ -24,17 +24,17 @@ const init = () => {
 
 const prepPrompt = () => {
   const prep = inquirer.prompt(prepQ)
-  arrayGen(prep.meals, (prep.mealsArr = []));
+  arrayGen(prep.mealNum, (prep.meals = []));
   return prep;
 };
 
 const mealPrompt = async (prep) => {
-  for (let i = 0; i < prep.mealsArr.length; i++) {
+  for (let i = 0; i < prep.meals.length; i++) {
     console.log(`meal ${i + 1}`);
     // await ensures question is asked once per meal
     const answer = await inquirer.prompt(mealQ);
     // sets the initial key-values of this indexed object
-    prep.mealsArr[i] = { num: answer.num, food: [] };
+    prep.meals[i] = { num: answer.num, food: [] };
     await foodPrompt(prep, i);
   }
 
@@ -43,13 +43,13 @@ const mealPrompt = async (prep) => {
 };
 
 const foodPrompt = async (prep, index) => {
-  for (let i = 0; i < prep.mealsArr[index].num; i++) {
+  for (let i = 0; i < prep.meals[index].num; i++) {
     // prompts the user to 'enter food item'
     const answer = await new Promise((resolve, reject) => {
       inquirer.prompt(foodQ).then(resolve).catch(reject);
     });
     // the 'answer.food' string value is then pushed into this indexed object's 'food' array
-    prep.mealsArr[index].food.push(answer.food);
+    prep.meals[index].food.push(answer.food);
   }
   // this indexed object's food array should now contain an amount of (string) objects equal to this object's 'num' value
 };

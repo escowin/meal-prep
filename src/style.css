@@ -2,13 +2,14 @@
     --accent: rgb(68, 66, 66);
     --link: rgb(163, 0, 0);
     --border: 1px solid var(--accent);
-    --section-padding: 1rem;
+    --section-padding: .5rem 1rem;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* outline: 1px dotted blue */
 }
 
 /* box */
@@ -16,37 +17,24 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    font-variant: small-caps;
     padding: 1rem;
     font-family: 'Khula', sans-serif;
+    font-variant: small-caps;
     letter-spacing: .05rem;
     height: 100vh;
 }
 
 header {
     display: grid;
-    grid-template-columns: 1fr auto auto;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-areas:
-        "a a a"
-        "b b b"
-        "c c c";
+    grid-template-columns: repeat(3, max-content);
+    gap: 0 .5rem;
     padding: var(--section-padding);
     border-bottom: var(--border);
     border-left: var(--border);
 }
 
 h1 {
-    grid-area: a;
-}
-
-.key {
-    grid-area: b;
-    grid-column: span 1;
-}
-
-.value {
-    grid: c;
+    grid-column: span 3;
 }
 
 main {
@@ -62,24 +50,19 @@ main {
 section {
     display: flex;
     flex-direction: column;
-    align-items: baseline;
-}
-
-h2 {
-    height: 100%;
-}
-
-h3 {
-
-    height: fit-content;
 }
 
 p,
-#meal {
+.meal, 
+li {
     padding-left: 1rem;
 }
 
-#meal {
+#meal-prep {
+    gap: .25rem;
+}
+
+.meal {
     grid-column: 2 / 3;
     display: grid;
     grid-template-columns: auto 1fr;
@@ -97,11 +80,6 @@ footer {
 #foods {
     list-style: none;
     padding-top: .15rem;
-}
-
-li {
-    border-left: var(--border);
-    padding: 0 1rem;
 }
 
 /* typography */
@@ -135,7 +113,7 @@ a:hover {
     }
 
     p,
-    #meal {
+    .meal {
         padding-left: 0;
     }
 }
