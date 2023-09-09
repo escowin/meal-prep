@@ -35,8 +35,9 @@ const mealPrompt = async (prep) => {
     console.log(`meal ${i + 1}`);
     // await ensures question is asked once per meal
     const answer = await inquirer.prompt(mealQ);
+    // sets the initial key-values of this indexed object
     prep.mealsArr[i] = { num: answer.num, food: [] };
-    foodPrompt(prep, i);
+    await foodPrompt(prep, i);
   }
 
   console.log("all meals have been prepped");
@@ -44,59 +45,26 @@ const mealPrompt = async (prep) => {
 
 const foodPrompt = async (prep, index) => {
   console.log(`
-  current: prep.mealsArr[${index}] { num: ${prep.mealsArr[index].num}, food: [] }
-  - prompt 'enter food item' x${prep.mealsArr[index].num} bc 'num'
-  - push answers into this object's 'food' array
-  - then move on to the next indexed object, mealsArr[${index+1}]]
+  meal ${index+1}: prep.mealsArr[${index}] { num: ${prep.mealsArr[index].num}, food: [] }
   `)
 
+  for (let i = 0; i < prep.mealsArr[index].num; i++) {
+    // prompts the user to 'enter food item'
+    const answer = await new Promise((resolve, reject) => {
+      inquirer.prompt(foodQ).then(resolve).catch(reject)
+    })
+    console.log(answer)
+    // the 'answer.food' string value is then pushed into this indexed object's 'food' array
+    prep.mealsArr[index].food.push(answer.food)
 
-  // for (let i = 0; i < prep.mealsArr[index].num; i++) {
-  //   console.log(prep.mealsArr[index].num)
-  //   // const answer = await inquirer.prompt(foodQ);
-  //   // console.log(answer);
-  // }
+    // the prompt will repeat as long as i is less than the 'num' value 
+  }
+  // this indexed object's food array should now contain an amount of (string) objects equal to this object's 'num' value
+  console.log(prep.mealsArr[index].food)
 
-  // const lastMeal = prepInfo.mealPrep[prepInfo.mealPrep.length - 1];
-  // const mealCount = prepInfo.mealPrep.length;
-
-  // return inquirer.prompt(mealLength).then((answers) => {
-  //   console.log(answers);
-  //   const foodCount = answers.mealLength;
-
-  //   for (let i = 0; i < foodCount; i++) {
-  //     console.log(`meal prep`);
-  //     return inquirer.prompt(mealQs).then((foodAnswers) => {
-  //       lastMeal.food.push(foodAnswers.food);
-  //       if (i < foodCount - 1) {
-  //         return foodPrompt(prepInfo);
-  //       }
-  //       if (prepInfo.meals > mealCount) {
-  //         prepInfo.mealPrep.push({
-  //           food: [],
-  //         });
-  //         return foodPrompt(prepInfo);
-  //       }
-  //       return prepInfo;
-  //     });
-  //   }
-  // });
-  // return inquirer.prompt(mealQs).then((answers) => {
-  //   lastMeal.food.push(answers.food);
-
-  //   if (answers.confirmAddFood) {
-  //     return foodPrompt(prepInfo);
-  //   }
-
-  //   if (prepInfo.meals > mealCount) {
-  //     prepInfo.mealPrep.push({
-  //       food: [],
-  //     });
-  //     return foodPrompt(prepInfo);
-  //   }
-
-  //   return prepInfo;
-  // });
+  console.log(`
+  the loop has completed, the same process will repeat for meal ${index+2}: mealsArr[${index+1}]
+  `)
 };
 
 // calls | chaining .then() method for legibility
