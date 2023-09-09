@@ -60,13 +60,13 @@ init()
   // .then(prepPrompt)
   // .then(mealPrompt)
   // .then((prep) => generateTemplate(prep))
-  .then(() => generateTemplate(mockPrep));
-// .then((template) => {
-//   return writeFile(template);
-// })
-// .then((writeFileResponse) => {
-//   console.log(writeFileResponse);
-//   return copyFile();
-// })
-// .then((copyFileResponse) => console.log(copyFileResponse))
-// .catch((err) => console.log(err));
+  .then(() => generateTemplate(mockPrep))
+  .then((template) => {
+    return writeFile(template);
+  })
+  .then((writeFileResponse) => {
+    console.log(writeFileResponse);
+    return copyFile();
+  })
+  .then((copyFileResponse) => console.log(copyFileResponse))
+  .catch((err) => console.log(err));
