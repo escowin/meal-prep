@@ -35,43 +35,46 @@ const prepPrompt = () => {
 };
 
 const mealPrompt = async (prep) => {
-  console.log(prep);
-
   for (let i = 0; i < prep.mealsArr.length; i++) {
     console.log(`meal ${i + 1}`);
+    // await ensures question is asked once per meal
     const answer = await inquirer.prompt(mealQuestion);
-    console.log(`meal ${i + 1} - Number of food items: ${answer.length}`);
+    prep.mealsArr[i] = { num: answer.num, food: [] };
+    foodPrompt(prep, i);
   }
 
   console.log("all meals have been prepped");
 };
 
-const foodPrompt = (prepInfo) => {
-  console.log(prepInfo);
-  const lastMeal = prepInfo.mealPrep[prepInfo.mealPrep.length - 1];
-  const mealCount = prepInfo.mealPrep.length;
+const foodPrompt = (data, index) => {
+  console.log("now in foodPrompt()");
+  console.log(data);
+  console.log(index);
 
-  return inquirer.prompt(mealLength).then((answers) => {
-    console.log(answers);
-    const foodCount = answers.mealLength;
+  // const lastMeal = prepInfo.mealPrep[prepInfo.mealPrep.length - 1];
+  // const mealCount = prepInfo.mealPrep.length;
 
-    for (let i = 0; i < foodCount; i++) {
-      console.log(`meal prep`);
-      return inquirer.prompt(mealQuestions).then((foodAnswers) => {
-        lastMeal.food.push(foodAnswers.food);
-        if (i < foodCount - 1) {
-          return foodPrompt(prepInfo);
-        }
-        if (prepInfo.meals > mealCount) {
-          prepInfo.mealPrep.push({
-            food: [],
-          });
-          return foodPrompt(prepInfo);
-        }
-        return prepInfo;
-      });
-    }
-  });
+  // return inquirer.prompt(mealLength).then((answers) => {
+  //   console.log(answers);
+  //   const foodCount = answers.mealLength;
+
+  //   for (let i = 0; i < foodCount; i++) {
+  //     console.log(`meal prep`);
+  //     return inquirer.prompt(mealQuestions).then((foodAnswers) => {
+  //       lastMeal.food.push(foodAnswers.food);
+  //       if (i < foodCount - 1) {
+  //         return foodPrompt(prepInfo);
+  //       }
+  //       if (prepInfo.meals > mealCount) {
+  //         prepInfo.mealPrep.push({
+  //           food: [],
+  //         });
+  //         return foodPrompt(prepInfo);
+  //       }
+  //       return prepInfo;
+  //     });
+  //   }
+  // });
   // return inquirer.prompt(mealQuestions).then((answers) => {
   //   lastMeal.food.push(answers.food);
 
