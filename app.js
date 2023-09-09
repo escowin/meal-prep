@@ -4,7 +4,7 @@ const generateTemplate = require("./src/prep-template");
 const { version } = require("./package.json");
 const {
   prepQuestions,
-  mealQuestions,
+  mealQuestion,
   foodQuestions,
 } = require("./lib/questions");
 const { mockPrep } = require("./lib/mockData");
@@ -28,42 +28,22 @@ const init = () => {
 };
 
 const prepPrompt = () => {
-  return mockPrep;
-  // return inquirer.prompt(prepQuestions);
+  // const prep = inquirer.prompt(prepQuestions)
+  const prep = mockPrep;
+  arrayGen(prep.meals, (prep.mealsArr = []));
+  return prep;
 };
 
-const mealPrepPrompt = (prepInfo) => {
-  // initializes the mealPrep array on the first pass
-  if (!prepInfo.mealPrep) {
-    prepInfo.mealsArr = [];
-    arrayGen(prepInfo.meals, prepInfo.mealsArr);
+const mealPrompt = async (prep) => {
+  console.log(prep);
+
+  for (let i = 0; i < prep.mealsArr.length; i++) {
+    console.log(`meal ${i + 1}`);
+    const answer = await inquirer.prompt(mealQuestion);
+    console.log(`meal ${i + 1} - Number of food items: ${answer.length}`);
   }
 
-  // loops through equal to the amount of meals in the prep
-  prepInfo.mealsArr.forEach((meal, i) => {
-    if (!prepInfo.mealsArr[i].food) {
-      prepInfo.mealsArr[i].food = [];
-    }
-    // bug: logs multiple meals, answering questions pushes food object value to all
-    console.log(`    ·                    meal ${i + 1}                     ·`);
-    inquirer.prompt(mealQuestions).then((answer) => {
-      arrayGen(answer.mealLength, prepInfo.mealsArr[i].food);
-      console.log(prepInfo.mealsArr[i]);
-    });
-    console.log(meal)
-  });
-
-  // for (let i = 0; i < prepInfo.meals; i++) {
-  //   console.log(`    ·                    meal ${i+1}                     ·`)
-
-  //   // pushes an object with a food array into meal prep
-  //   prepInfo.mealPrep.push({ food: [] });
-
-  //   // returns updated prepInfo object once the index value matches the amount of meals in the prep
-  //   // (i = prepInfo.meals - 1) ? prepInfo : (prepInfo = foodPrompt(prepInfo));
-
-  //   return prepInfo;
-  // }
+  console.log("all meals have been prepped");
 };
 
 const foodPrompt = (prepInfo) => {
@@ -111,7 +91,7 @@ const foodPrompt = (prepInfo) => {
 };
 
 // calls | chaining .then() method for legibility
-init().then(prepPrompt).then(mealPrepPrompt);
+init().then(prepPrompt).then(mealPrompt);
 // .then(foodPrompt)
 // .then((prepInfo) => {
 //   return generateTemplate(prepInfo);
