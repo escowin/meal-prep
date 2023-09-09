@@ -4,10 +4,10 @@ const generateTemplate = require("./src/prep-template");
 const { version } = require("./package.json");
 const { prepQ, mealQ, foodQ } = require("./lib/questions");
 const { arrayGen, year } = require("./utils/helpers");
+const { mockPrep } = require("./lib/mockData")
 
 // logic
 const init = () => {
-  let date = new Date().getFullYear();
   // returns a string via promise object
   return Promise.resolve(
     console.log(`

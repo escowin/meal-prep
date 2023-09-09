@@ -1,7 +1,11 @@
-const { capitalizeFirstWord, formatDuration, year } = require("../utils/helpers");
+const {
+  capitalizeFirstWord,
+  formatDuration,
+  year,
+} = require("../utils/helpers");
 
 // logic.generate template literal
-const generatePage = (templateData) => {
+function generatePage(templateData) {
   const { mealsArr, ...prepInfo } = templateData;
 
   return `
@@ -39,76 +43,65 @@ const generatePage = (templateData) => {
     </footer>
   </body>
 </html>`;
-};
+}
 
-const generateWeightDetails = (weightData) => {
-  if (weightData) {
-    return `<p class='key'>weight</p>
-    <p class='value'>${weightData}</p>`;
-  }
-  return "";
-};
+function generateWeightDetails(weightData) {
+  return weightData
+    ? ""
+    : `<p class='key'>weight</p><p class='value'>${weightData}</p>`;
+}
 
-const generateWorkoutSection = (workoutData) => {
-  if (workoutData) {
-    return `<section id='workout-split'>
-      <h2>Workout split</h2>
-      <p>${capitalizeFirstWord(workoutData)}</p>
-    </section>`;
-  }
-  return "";
-};
+function generateWorkoutSection(workoutData) {
+  return !workoutData
+    ? ""
+    : `<section id='workout-split'>
+        <h2>Workout split</h2>
+        <p>${capitalizeFirstWord(workoutData)}</p>
+      </section>`;
+}
 
-const generateCardioSection = (cardioData) => {
-  if (cardioData) {
-    return `<section id='cardio'>
+function generateCardioSection(cardioData) {
+  return !cardioData
+    ? ""
+    : `<section id='cardio'>
         <h2>Cardio</h2>
         <p>${capitalizeFirstWord(cardioData)}</p>
       </section>`;
-  }
-  return "";
-};
+}
 
-const generateSupplementsSection = (suppData) => {
-  if (suppData) {
-    return `<section id='supplements'>
-      <h2>Supplements</h2>
-      <p>${capitalizeFirstWord(suppData)}</p>
-    </section>`;
-  }
-  return "";
-};
+function generateSupplementsSection(suppData) {
+  return !suppData
+    ? ""
+    : `<section id='supplements'>
+        <h2>Supplements</h2>
+        <p>${capitalizeFirstWord(suppData)}</p>
+      </section>`;
+}
 
-const generateCheatDaySection = (cheatDayData) => {
-  if (!cheatDayData) {
-    return `<section id='cheat-day'>
+function generateCheatDaySection(cheatDayData) {
+  return !cheatDayData
+    ? ""
+    : `<section id='cheat-day'>
         <h2>Cheat day</h2>
         <p>${capitalizeFirstWord(cheatDayData)}</p>
       </section>`;
-  }
-  return "";
-};
+}
 
-const generateMealPrepSection = (meals) => {
+function generateMealPrepSection(meals) {
   let template = "";
 
   meals.forEach((meal, i) => {
-    template += `
-    <article id="meal">
+    template += `<article id="meal">
       <h3>${i + 1}</h3>
       <ul id="foods">${generateFoodItems(meal.food)}</ul>
     </article>`;
   });
 
-  return `<section id="meal-prep">
-        <h2>Meal prep</h2>
-        ${template}
-      </section>`;
-};
+  return `<section id="meal-prep"><h2>Meal prep</h2>${template}</section>`;
+}
 
-const generateFoodItems = (food) => {
-  const templates = food.map(item => `<li>${item}</li>`)
-  return templates.join('')
-};
+function generateFoodItems(food) {
+  return food.map((item) => `<li>${item}</li>`).join("");
+}
 
 module.exports = generatePage;
