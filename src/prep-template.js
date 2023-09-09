@@ -1,6 +1,7 @@
 const {
-  capitalizeFirstWord,
+  sentenceCase,
   formatDuration,
+  formatDate,
   year,
 } = require("../utils/helpers");
 
@@ -17,14 +18,14 @@ function generatePage(templateData) {
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link href="https://fonts.googleapis.com/css2?family=Khula:wght@300&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="./style.css">
-      <title>${capitalizeFirstWord(prepInfo.name)}</title>
+      <title>${sentenceCase(prepInfo.name)}</title>
   </head>
   <body>
     <header>
-      <h1>${capitalizeFirstWord(prepInfo.name)}</h1>
+      <h1>${sentenceCase(prepInfo.name)}</h1>
       <div>
         <p class="key">start date</p>
-        <p class="value">${prepInfo.startDate}</p>
+        <p class="value">${formatDate(prepInfo.startDate)}</p>
       </div>
       <div>
         <p class="key">duration</p>
@@ -60,7 +61,7 @@ function generateWorkoutSection(workoutData) {
     ? ""
     : `<section id='workout-split'>
         <h2>Workout split</h2>
-        <p>${capitalizeFirstWord(workoutData)}</p>
+        <p>${sentenceCase(workoutData)}</p>
       </section>`;
 }
 
@@ -69,7 +70,7 @@ function generateCardioSection(cardioData) {
     ? ""
     : `<section id='cardio'>
         <h2>Cardio</h2>
-        <p>${capitalizeFirstWord(cardioData)}</p>
+        <p>${sentenceCase(cardioData)}</p>
       </section>`;
 }
 
@@ -78,7 +79,7 @@ function generateSupplementsSection(suppData) {
     ? ""
     : `<section id='supplements'>
         <h2>Supplements</h2>
-        <p>${capitalizeFirstWord(suppData)}</p>
+        <p>${sentenceCase(suppData)}</p>
       </section>`;
 }
 
@@ -87,7 +88,7 @@ function generateCheatDaySection(cheatDayData) {
     ? ""
     : `<section id='cheat-day'>
         <h2>Cheat day</h2>
-        <p>${capitalizeFirstWord(cheatDayData)}</p>
+        <p>${sentenceCase(cheatDayData)}</p>
       </section>`;
 }
 

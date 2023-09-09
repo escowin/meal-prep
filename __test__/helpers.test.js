@@ -1,4 +1,4 @@
-const { capitalizeFirstWord, formatDuration, currentDate, arrayGen } = require("../utils/helpers")
+const { sentenceCase, formatDuration, currentDate, arrayGen, formatDate } = require("../utils/helpers")
 
 test("returns date formatted as yyyy-mm-dd", () => {
     const date = new Date().toISOString();
@@ -18,6 +18,11 @@ test("correctly pluralizes week string", () => {
 })
 
 test("capitalized first letter of first word in string", () => {
-    expect(capitalizeFirstWord("hi")).toEqual("Hi")
-    expect(capitalizeFirstWord("hello there")).toEqual("Hello there")
+    expect(sentenceCase("hi")).toEqual("Hi")
+    expect(sentenceCase("hello there")).toEqual("Hello there")
+})
+
+test("reformats common date patterns into YYYY.MM.DD", () => {
+    expect(formatDate("YYYY-MM-DD")).toEqual("YYYY.MM.DD")
+    expect(formatDate("YYYY/MM/DD")).toEqual("YYYY.MM.DD")
 })
