@@ -1,3 +1,4 @@
+const date = new Date()
 module.exports = {
   capitalizeFirstWord: (string) => string.charAt(0).toUpperCase() + string.slice(1),
 
@@ -5,7 +6,7 @@ module.exports = {
   formatDuration: (num) => (num !== 1) ? `${num} weeks` : `${num} week`,
 
   // returns current date as "YYYY-MM-DD"
-  currentDate: () => new Date().toISOString().split("T")[0],
+  currentDate: () => date.toISOString().split("T")[0],
 
   // returns array with child array objects equal to the num value
   arrayGen: (num, arr) => {
@@ -15,4 +16,6 @@ module.exports = {
     }
     return arr;
   },
+
+  year: date.getFullYear()
 };

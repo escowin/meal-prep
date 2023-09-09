@@ -3,8 +3,7 @@ const { writeFile, copyFile } = require("./utils/generate-page");
 const generateTemplate = require("./src/prep-template");
 const { version } = require("./package.json");
 const { prepQ, mealQ, foodQ } = require("./lib/questions");
-const { mockPrep } = require("./lib/mockData");
-const { arrayGen } = require("./utils/helpers");
+const { arrayGen, year } = require("./utils/helpers");
 
 // logic
 const init = () => {
@@ -15,7 +14,7 @@ const init = () => {
     ·················································
     ·                                               ·
     ·               meal prep v${version}                ·
-    ·            © ${date} edwin m. escobar            ·
+    ·            © ${year} edwin m. escobar            ·
     ·     https://github.com/escowin/meal-prep      ·
     ·                                               ·
     ·················································
@@ -69,4 +68,4 @@ init()
     return copyFile();
   })
   .then((copyFileResponse) => console.log(copyFileResponse))
-  .catch((err) => console.log(err));
+  .catch((err) => console.error(err));

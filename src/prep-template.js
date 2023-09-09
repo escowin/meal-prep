@@ -1,7 +1,4 @@
-const { capitalizeFirstWord, formatDuration } = require("../utils/helpers");
-
-// data.current year
-const year = new Date().getFullYear();
+const { capitalizeFirstWord, formatDuration, year } = require("../utils/helpers");
 
 // logic.generate template literal
 const generatePage = (templateData) => {
@@ -101,7 +98,6 @@ const generateMealPrepSection = (meals) => {
       <h3>${i + 1}</h3>
       <ul id="foods">${generateFoodItems(meal.food)}</ul>
     </article>`;
-    console.log(template)
   });
 
   return `<section id="meal-prep">
