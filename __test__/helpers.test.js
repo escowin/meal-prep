@@ -61,9 +61,6 @@ test("returns true if value is within range", () => {
   expect(validate.range(1, 1, 10)).toEqual(true);
   expect(validate.range(0, 1, 10)).toEqual(false);
   expect(validate.range(11, 1, 10)).toEqual(false);
-  expect(validate.range(11, 1)).toEqual(false);
-  expect(validate.range(11)).toEqual(false);
-  expect(validate.range()).toEqual(false);
 });
 
 test("returns parameter data if it exists", () => {

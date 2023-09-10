@@ -39,10 +39,6 @@ const validate = {
   input: (input) => (!input ? (console.log("required"), false) : true),
   num: (num) => ((!num || num < 1) ? (console.log("enter a valid number"), false) : true),
   range: (num, min, max) => {
-    if (!num || !min || !max) {
-      console.log("all parameters required")
-      return false;
-    }
     return !(num >= min && num <= max)
     ? (console.log(`Enter a number between ${min} - ${max}`), false)
     : true

@@ -4,7 +4,6 @@ const generateTemplate = require("./src/prep-template");
 const { version } = require("./package.json");
 const { prepQ, mealQ, foodQ } = require("./lib/questions");
 const { calc, format } = require("./utils/helpers");
-const { mockPrep } = require("./lib/mockData");
 
 // logic
 const init = () => {
