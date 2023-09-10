@@ -33,7 +33,20 @@ const format = {
   num: (num) => (num === 10 ? num : `0${num}`),
 };
 
+const validate = {
+  data: (input) => (input ? true : false),
+  num: (num) => (!num || num < 1 ? false : true),
+  range: (num) => {
+    if (!(num > 0 && num <= 10)) {
+      console.log("enter a number between 1 - 10");
+      return false;
+    }
+    return true;
+  },
+};
+
 module.exports = {
   calc,
   format,
+  validate,
 };

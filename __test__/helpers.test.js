@@ -1,4 +1,4 @@
-const { calc, format } = require("../utils/helpers");
+const { calc, format, validate } = require("../utils/helpers");
 
 // calc helpers
 test("meals value creates equal amount of empty array objects inside mealsArr", () => {
@@ -42,3 +42,24 @@ test("capitalizes first letter of sentence string", () => {
   expect(format.sentence("hi")).toEqual("Hi");
   expect(format.sentence("hello there")).toEqual("Hello there");
 });
+
+// validation
+test("returns true or false based on input", () => {
+  expect(validate.data("patrick")).toEqual(true)
+  expect(validate.data("180 lbs")).toEqual(true)
+  expect(validate.data("180")).toEqual(true)
+  expect(validate.data()).toEqual(false)
+})
+
+test("returns true if value is 1 or higher", () => {
+  expect(validate.num(1)).toEqual(true)
+  expect(validate.num(0)).toEqual(false)
+  expect(validate.num()).toEqual(false)
+})
+
+test("returns true if value is within range", () => {
+  expect(validate.range(1)).toEqual(true)
+  expect(validate.range(0)).toEqual(false)
+  expect(validate.range(11)).toEqual(false)
+  expect(validate.range()).toEqual(false)
+})

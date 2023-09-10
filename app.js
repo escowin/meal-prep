@@ -63,9 +63,10 @@ const foodPrompt = async (prep, index) => {
 
 // calls | chaining .then() method for legibility
 init()
-  .then(prepPrompt)
-  .then(mealPrompt)
-  .then(generateTemplate)
+  // .then(prepPrompt)
+  // .then(mealPrompt)
+  // .then(generateTemplate)
+  .then(() => generateTemplate(mockPrep))
   .then(writeFile)
   .then((writeFileResponse) => console.log(writeFileResponse))
   .then(copyFile)

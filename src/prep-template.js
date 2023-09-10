@@ -37,7 +37,7 @@ function generatePage(templateData) {
   <body>
     <header>
       <h1>${format.sentence(prepInfo.name)}</h1>
-      <p>\u2014 ${prepInfo.goal}</p>
+      <p>\u2014${prepInfo.goal}</p>
     </header>
     <main>
       <section id="prep-stats">${generatePrepStats(prepStats)}</section>
