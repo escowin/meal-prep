@@ -1,11 +1,8 @@
 const {
-  sentenceCase,
-  formatDuration,
+  format,
   currentDate,
   arrayGen,
-  formatDate,
   calculateEndDate,
-  formatNum
 } = require("../utils/helpers");
 
 test("returns date formatted as yyyy-mm-dd", () => {
@@ -20,19 +17,19 @@ test("meals value creates equal amount of empty array objects inside mealsArr", 
 });
 
 test("correctly pluralizes week string", () => {
-  expect(formatDuration(0)).toEqual("0 weeks");
-  expect(formatDuration(1)).toEqual("1 week");
-  expect(formatDuration(2)).toEqual("2 weeks");
+  expect(format.duration(0)).toEqual("0 weeks");
+  expect(format.duration(1)).toEqual("1 week");
+  expect(format.duration(2)).toEqual("2 weeks");
 });
 
 test("capitalized first letter of first word in string", () => {
-  expect(sentenceCase("hi")).toEqual("Hi");
-  expect(sentenceCase("hello there")).toEqual("Hello there");
+  expect(format.sentence("hi")).toEqual("Hi");
+  expect(format.sentence("hello there")).toEqual("Hello there");
 });
 
 test("reformats common date patterns into YYYY.MM.DD", () => {
-  expect(formatDate("YYYY-MM-DD")).toEqual("YYYY.MM.DD");
-  expect(formatDate("YYYY/MM/DD")).toEqual("YYYY.MM.DD");
+  expect(format.date("YYYY-MM-DD")).toEqual("YYYY.MM.DD");
+  expect(format.date("YYYY/MM/DD")).toEqual("YYYY.MM.DD");
 });
 
 test("calculates end date using start & duration (in weeks)", () => {
@@ -40,6 +37,6 @@ test("calculates end date using start & duration (in weeks)", () => {
 });
 
 test("formats single digits with 0 placeholder", () => {
-  expect(formatNum(1)).toEqual("01")
-  expect(formatNum(10)).toEqual(10)
-})
+  expect(format.num(1)).toEqual("01");
+  expect(format.num(10)).toEqual(10);
+});

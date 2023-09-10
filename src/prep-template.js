@@ -1,28 +1,27 @@
-const {
-  sentenceCase,
-  formatDuration,
-  formatDate,
-  year,
-  calculateEndDate,
-} = require("../utils/helpers");
+const { format, year, calculateEndDate } = require("../utils/helpers");
 
 // logic.generate template literal
 function generatePage(templateData) {
   const { meals, ...prepInfo } = templateData;
 
   const prepStats = [
-    { id: "duration", value: formatDuration(prepInfo.duration) },
-    { id: "start", value: formatDate(prepInfo.startDate) },
-    { id: "end", value: formatDate(calculateEndDate(prepInfo.startDate, prepInfo.duration)) },
-    { id: "weight", value: prepInfo.weight }
+    { id: "duration", value: format.duration(prepInfo.duration) },
+    { id: "start", value: format.date(prepInfo.startDate) },
+    {
+      id: "end",
+      value: format.date(
+        calculateEndDate(prepInfo.startDate, prepInfo.duration)
+      ),
+    },
+    { id: "weight", value: prepInfo.weight },
   ];
 
   const prepDetails = [
     { id: "workout", value: prepInfo.split },
     { id: "cardio", value: prepInfo.cardio },
     { id: "supplements", value: prepInfo.supps },
-    { id: "cheat day", value: prepInfo.cheatday }
-  ]
+    { id: "cheat day", value: prepInfo.cheatday },
+  ];
 
   return `
 <!DOCTYPE html>
@@ -33,11 +32,11 @@ function generatePage(templateData) {
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link href="https://fonts.googleapis.com/css2?family=Khula:wght@300&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="./style.css">
-      <title>${sentenceCase(prepInfo.name)}</title>
+      <title>${format.sentence(prepInfo.name)}</title>
   </head>
   <body>
     <header>
-      <h1>${sentenceCase(prepInfo.name)}</h1>
+      <h1>${format.sentence(prepInfo.name)}</h1>
       <p>\u2014 ${prepInfo.goal}</p>
     </header>
     <main>
@@ -56,15 +55,20 @@ function generatePage(templateData) {
 }
 
 function generatePrepStats(stats) {
-  return stats.map((stat) =>
-    `<article id="${stat.id}"><p class="key">${stat.id}</p><p class="value">${stat.value}</p></article>`
-  ).join("");
+  return stats
+    .map(
+      (stat) =>
+        `<article id="${stat.id}"><p class="key">${stat.id}</p><p class="value">${stat.value}</p></article>`
+    )
+    .join("");
 }
 
 function generatePrepDetails(details) {
   return !details
     ? ""
-    : details.map(detail => `<h2>${sentenceCase(detail.id)}</h2> <p>${sentenceCase(detail.value)}</p>`).join("");
+    : details
+        .map((detail) => `<h2>${format.sentence(detail.id)}</h2> <p>${format.sentence(detail.value)}</p>`)
+        .join("");
 }
 
 function generateMealPrepSection(meals) {

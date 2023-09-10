@@ -1,13 +1,19 @@
 const date = new Date();
-module.exports = {
+
+const format = {
   // capitlizes first letter of string
-  sentenceCase: (string) => string.charAt(0).toUpperCase() + string.slice(1),
+  sentence: (string) => string.charAt(0).toUpperCase() + string.slice(1),  
+  // reformats common date patterns into YYYY.MM.DD
+  date: (date) => date.replace(/[-/]/g, "."),
+  // plural & singular is dependent on a dynamic number value
+  duration: (num) => (num !== 1 ? `${num} weeks` : `${num} week`),
+  // formats single digit num values with 2-digit placeholder
+  num: (num) => (num === 10 ? num : `0${num}`),
+}
+
+module.exports = {
   // returns current date as "YYYY-MM-DD"
   currentDate: () => date.toISOString().split("T")[0],
-  // reformats common date patterns into YYYY.MM.DD
-  formatDate: (date) => date.replace(/[-/]/g, "."),
-  // plural & singular is dependent on a dynamic number value
-  formatDuration: (num) => (num !== 1 ? `${num} weeks` : `${num} week`),
   // returns array with child array objects equal to the num value
   arrayGen: (num, arr) => {
     for (let i = 0; i < num; i++) {
@@ -25,6 +31,6 @@ module.exports = {
     const result = endDate.toISOString().split("T")[0];
     return result;
   },
+  format,
   year: date.getFullYear(),
-  formatNum: (num) => (num === 10 ? num : `0${num}`),
 };

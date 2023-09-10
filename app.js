@@ -3,8 +3,8 @@ const { writeFile, copyFile } = require("./utils/generate-page");
 const generateTemplate = require("./src/prep-template");
 const { version } = require("./package.json");
 const { prepQ, mealQ, foodQ } = require("./lib/questions");
-const { arrayGen, year, formatNum } = require("./utils/helpers");
-const { mockPrep } = require("./lib/mockData")
+const { arrayGen, year, format } = require("./utils/helpers");
+const { mockPrep } = require("./lib/mockData");
 
 // logic
 const init = () => {
@@ -23,19 +23,19 @@ const init = () => {
 };
 
 const prepPrompt = () => {
-  const prep = inquirer.prompt(prepQ)
+  const prep = inquirer.prompt(prepQ);
   return prep;
 };
 
 const mealPrompt = async (data) => {
-  let prep = data
-  prep.meals = []
+  let prep = data;
+  prep.meals = [];
   arrayGen(prep.mealNum, prep.meals);
 
   for (let i = 0; i < prep.mealNum; i++) {
     console.log(`
     ·················································
-    ·                    meal ${formatNum(i + 1)}                    ·
+    ·                    meal ${format.num(i + 1)}                    ·
     ·················································
     `);
     // await ensures question is asked once per meal
