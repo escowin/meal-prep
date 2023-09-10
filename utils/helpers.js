@@ -34,7 +34,7 @@ const format = {
 };
 
 const validate = {
-  data: (input) => (input ? true : false),
+  input: (input) => (input ? true : false),
   num: (num) => (!num || num < 1 ? false : true),
   range: (num) => {
     if (!(num > 0 && num <= 10)) {
@@ -43,6 +43,7 @@ const validate = {
     }
     return true;
   },
+  data: (data) => (!data ? "" : data),
 };
 
 module.exports = {

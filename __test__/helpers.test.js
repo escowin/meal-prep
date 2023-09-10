@@ -45,21 +45,27 @@ test("capitalizes first letter of sentence string", () => {
 
 // validation
 test("returns true or false based on input", () => {
-  expect(validate.data("patrick")).toEqual(true)
-  expect(validate.data("180 lbs")).toEqual(true)
-  expect(validate.data("180")).toEqual(true)
-  expect(validate.data()).toEqual(false)
-})
+  expect(validate.input("patrick")).toEqual(true);
+  expect(validate.input("180 lbs")).toEqual(true);
+  expect(validate.input("180")).toEqual(true);
+  expect(validate.input()).toEqual(false);
+});
 
 test("returns true if value is 1 or higher", () => {
-  expect(validate.num(1)).toEqual(true)
-  expect(validate.num(0)).toEqual(false)
-  expect(validate.num()).toEqual(false)
-})
+  expect(validate.num(1)).toEqual(true);
+  expect(validate.num(0)).toEqual(false);
+  expect(validate.num()).toEqual(false);
+});
 
 test("returns true if value is within range", () => {
-  expect(validate.range(1)).toEqual(true)
-  expect(validate.range(0)).toEqual(false)
-  expect(validate.range(11)).toEqual(false)
-  expect(validate.range()).toEqual(false)
-})
+  expect(validate.range(1)).toEqual(true);
+  expect(validate.range(0)).toEqual(false);
+  expect(validate.range(11)).toEqual(false);
+  expect(validate.range()).toEqual(false);
+});
+
+test("same data is returned if it exists", () => {
+  const data = { a: "something" };
+  expect(validate.data(data.a)).toEqual(data.a);
+  expect(validate.data(data.b)).toEqual("");
+});

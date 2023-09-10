@@ -1,4 +1,4 @@
-const { calc, format } = require("../utils/helpers");
+const { calc, format, validate } = require("../utils/helpers");
 
 // logic.generate template literal
 function generatePage(templateData) {
@@ -56,19 +56,15 @@ function generatePage(templateData) {
 
 function generatePrepStats(stats) {
   return stats
-    .map(
-      (stat) =>
-        `<article id="${stat.id}"><p class="key">${stat.id}</p><p class="value">${stat.value}</p></article>`
-    )
+    .map((stat) => `<article id="${stat.id}"><p class="key">${stat.id}</p><p>${stat.value}</p></article>`)
     .join("");
 }
 
 function generatePrepDetails(details) {
-  return !details
-    ? ""
-    : details
-        .map((detail) => `<h2>${format.sentence(detail.id)}</h2> <p>${format.sentence(detail.value)}</p>`)
-        .join("");
+  validate.data(details)
+  return details
+    .map((detail) => `<h2>${format.sentence(detail.id)}</h2><p>${format.sentence(detail.value)}</p>`)
+    .join("");
 }
 
 function generateMealPrepSection(meals) {
