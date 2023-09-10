@@ -34,8 +34,10 @@ const format = {
 };
 
 const validate = {
+  data: (data) => (!data ? "" : data),
+  date: (date) => (!date.match(/\b\d{4}-\d{2}-\d{2}\b/g)) ? (console.log("format date as YYYY-MM-DD"), false) : true,
   input: (input) => (!input ? (console.log("required"), false) : true),
-  num: (num) => (!num || num < 1 ? (console.log("enter a valid number"), false) : true),
+  num: (num) => ((!num || num < 1) ? (console.log("enter a valid number"), false) : true),
   range: (num, min, max) => {
     if (!num || !min || !max) {
       console.log("all parameters required")
@@ -45,7 +47,6 @@ const validate = {
     ? (console.log(`Enter a number between ${min} - ${max}`), false)
     : true
   },
-  data: (data) => (!data ? "" : data),
 };
 
 module.exports = {

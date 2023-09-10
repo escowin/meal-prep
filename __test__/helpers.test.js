@@ -71,3 +71,9 @@ test("returns parameter data if it exists", () => {
   expect(validate.data(data.a)).toEqual(data.a);
   expect(validate.data(data.b)).toEqual("");
 });
+
+test("returns true if input follows YYYY-MM-DD format", () => {
+  expect(validate.date("2022-01-31")).toEqual(true)
+  expect(validate.date("09-10-2023")).toEqual(false)
+  expect(validate.date("sept 10")).toEqual(false)
+})
