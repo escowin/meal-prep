@@ -24,15 +24,20 @@ const init = () => {
 
 const prepPrompt = () => {
   const prep = inquirer.prompt(prepQ)
-  arrayGen(prep.mealNum, (prep.meals = []));
   return prep;
 };
 
-const mealPrompt = async (prep) => {
-  for (let i = 0; i < prep.meals.length; i++) {
+const mealPrompt = async (data) => {
+  let prep = data
+  prep.meals = []
+  arrayGen(prep.mealNum, prep.meals);
+  console.log(prep)
+
+  for (let i = 0; i < prep.mealNum; i++) {
     console.log(`meal ${i + 1}`);
     // await ensures question is asked once per meal
     const answer = await inquirer.prompt(mealQ);
+    console.log(answer)
     // sets the initial key-values of this indexed object
     prep.meals[i] = { num: answer.num, food: [] };
     await foodPrompt(prep, i);
@@ -56,13 +61,10 @@ const foodPrompt = async (prep, index) => {
 
 // calls | chaining .then() method for legibility
 init()
-  // .then(prepPrompt)
-  // .then(mealPrompt)
-  // .then((prep) => generateTemplate(prep))
-  .then(() => generateTemplate(mockPrep))
-  .then((template) => {
-    return writeFile(template);
-  })
+  .then(prepPrompt)
+  .then(mealPrompt)
+  .then(generateTemplate)
+  .then((template) => writeFile(template))
   .then((writeFileResponse) => {
     console.log(writeFileResponse);
     return copyFile();

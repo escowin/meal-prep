@@ -105,3 +105,4 @@ dist
 
 # Misc
 package-lock.json
+mockData.js
