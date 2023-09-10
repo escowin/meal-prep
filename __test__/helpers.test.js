@@ -5,6 +5,7 @@ const {
   arrayGen,
   formatDate,
   calculateEndDate,
+  formatNum
 } = require("../utils/helpers");
 
 test("returns date formatted as yyyy-mm-dd", () => {
@@ -37,3 +38,8 @@ test("reformats common date patterns into YYYY.MM.DD", () => {
 test("calculates end date using start & duration (in weeks)", () => {
   expect(calculateEndDate("2022-01-01", 4)).toEqual("2022-01-29");
 });
+
+test("formats single digits with 0 placeholder", () => {
+  expect(formatNum(1)).toEqual("01")
+  expect(formatNum(10)).toEqual(10)
+})

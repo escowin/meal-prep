@@ -18,10 +18,13 @@ module.exports = {
   },
   // returns an end date value calculated from start date and week duration (converted to milliseconds)
   calculateEndDate: (start, duration) => {
-    const startDate = new Date(start)
-    const endDate = new Date(startDate.getTime() + duration * 7 * 24 * 60 * 60 * 1000)
-    const result = endDate.toISOString().split("T")[0]
-    return result
+    const startDate = new Date(start);
+    const endDate = new Date(
+      startDate.getTime() + duration * 7 * 24 * 60 * 60 * 1000
+    );
+    const result = endDate.toISOString().split("T")[0];
+    return result;
   },
   year: date.getFullYear(),
+  formatNum: (num) => (num === 10 ? num : `0${num}`),
 };

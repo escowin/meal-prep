@@ -3,7 +3,7 @@ const { writeFile, copyFile } = require("./utils/generate-page");
 const generateTemplate = require("./src/prep-template");
 const { version } = require("./package.json");
 const { prepQ, mealQ, foodQ } = require("./lib/questions");
-const { arrayGen, year } = require("./utils/helpers");
+const { arrayGen, year, formatNum } = require("./utils/helpers");
 const { mockPrep } = require("./lib/mockData")
 
 // logic
@@ -31,13 +31,15 @@ const mealPrompt = async (data) => {
   let prep = data
   prep.meals = []
   arrayGen(prep.mealNum, prep.meals);
-  console.log(prep)
 
   for (let i = 0; i < prep.mealNum; i++) {
-    console.log(`meal ${i + 1}`);
+    console.log(`
+    ·················································
+    ·                    meal ${formatNum(i + 1)}                    ·
+    ·················································
+    `);
     // await ensures question is asked once per meal
     const answer = await inquirer.prompt(mealQ);
-    console.log(answer)
     // sets the initial key-values of this indexed object
     prep.meals[i] = { num: answer.num, food: [] };
     await foodPrompt(prep, i);
@@ -64,10 +66,8 @@ init()
   .then(prepPrompt)
   .then(mealPrompt)
   .then(generateTemplate)
-  .then((template) => writeFile(template))
-  .then((writeFileResponse) => {
-    console.log(writeFileResponse);
-    return copyFile();
-  })
+  .then(writeFile)
+  .then((writeFileResponse) => console.log(writeFileResponse))
+  .then(copyFile)
   .then((copyFileResponse) => console.log(copyFileResponse))
   .catch((err) => console.error(err));
