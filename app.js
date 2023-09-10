@@ -10,8 +10,7 @@ const { mockPrep } = require("./lib/mockData");
 const init = () => {
   // returns a string via promise object
   return Promise.resolve(
-    console.log(`
-    ·················································
+    console.log(`    ·················································
     ·                                               ·
     ·               meal-prep v${version}                ·
     ·            © ${calc.year()} edwin m. escobar            ·
@@ -34,10 +33,7 @@ const mealPrompt = async (data) => {
 
   for (let i = 0; i < prep.mealNum; i++) {
     console.log(`
-    ·················································
-    ·                    meal ${format.num(i + 1)}                    ·
-    ·················································
-    `);
+    meal ${format.num(i + 1)}`);
     // await ensures question is asked once per meal
     const answer = await inquirer.prompt(mealQ);
     // sets the initial key-values of this indexed object
@@ -45,7 +41,7 @@ const mealPrompt = async (data) => {
     await foodPrompt(prep, i);
   }
 
-  console.log("all meals have been prepped");
+  console.log("    all meals have been prepped");
   return prep;
 };
 
@@ -63,10 +59,9 @@ const foodPrompt = async (prep, index) => {
 
 // calls | chaining .then() method for legibility
 init()
-  // .then(prepPrompt)
-  // .then(mealPrompt)
-  // .then(generateTemplate)
-  .then(() => generateTemplate(mockPrep))
+  .then(prepPrompt)
+  .then(mealPrompt)
+  .then(generateTemplate)
   .then(writeFile)
   .then((writeFileResponse) => console.log(writeFileResponse))
   .then(copyFile)
