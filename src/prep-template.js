@@ -3,11 +3,26 @@ const {
   formatDuration,
   formatDate,
   year,
+  calculateEndDate,
 } = require("../utils/helpers");
 
 // logic.generate template literal
 function generatePage(templateData) {
   const { meals, ...prepInfo } = templateData;
+
+  const prepStats = [
+    { id: "duration", value: formatDuration(prepInfo.duration) },
+    { id: "start", value: formatDate(prepInfo.startDate) },
+    { id: "end", value: formatDate(calculateEndDate(prepInfo.startDate, prepInfo.duration)) },
+    { id: "weight", value: prepInfo.weight }
+  ];
+
+  const prepDetails = [
+    { id: "workout", value: prepInfo.split },
+    { id: "cardio", value: prepInfo.cardio },
+    { id: "supplements", value: prepInfo.supps },
+    { id: "cheat day", value: prepInfo.cheatday }
+  ]
 
   return `
 <!DOCTYPE html>
@@ -23,21 +38,11 @@ function generatePage(templateData) {
   <body>
     <header>
       <h1>${sentenceCase(prepInfo.name)}</h1>
-      <div>
-        <p class="key">start date</p>
-        <p class="value">${formatDate(prepInfo.startDate)}</p>
-      </div>
-      <div>
-        <p class="key">duration</p>
-        <p class="value">${formatDuration(prepInfo.duration)}</p>
-      </div>
-      ${generateWeightDetails(prepInfo.weight)}
+      <p>${prepInfo.goal}</p>
     </header>
     <main>
-      ${generateWorkoutSection(prepInfo.split)}
-      ${generateCardioSection(prepInfo.cardio)}
-      ${generateSupplementsSection(prepInfo.supps)}
-      ${generateCheatDaySection(prepInfo.cheatday)}
+      <section id="prep-stats">${generatePrepStats(prepStats)}</section>
+      <section id="prep-details">${generatePrepDetails(prepDetails)}</section>
       ${generateMealPrepSection(meals)}
     </main>
     <footer>
@@ -50,46 +55,16 @@ function generatePage(templateData) {
 </html>`;
 }
 
-function generateWeightDetails(weightData) {
-  return !weightData
-    ? ""
-    : `<div><p class='key'>weight</p><p class='value'>${weightData}</p></div>`;
+function generatePrepStats(stats) {
+  return stats.map((stat) =>
+    `<article id="${stat.id}"><p class="key">${stat.id}</p><p class="value">${stat.value}</p></article>`
+  ).join("");
 }
 
-function generateWorkoutSection(workoutData) {
-  return !workoutData
+function generatePrepDetails(details) {
+  return !details
     ? ""
-    : `<section id='workout-split'>
-        <h2>Workout split</h2>
-        <p>${sentenceCase(workoutData)}</p>
-      </section>`;
-}
-
-function generateCardioSection(cardioData) {
-  return !cardioData
-    ? ""
-    : `<section id='cardio'>
-        <h2>Cardio</h2>
-        <p>${sentenceCase(cardioData)}</p>
-      </section>`;
-}
-
-function generateSupplementsSection(suppData) {
-  return !suppData
-    ? ""
-    : `<section id='supplements'>
-        <h2>Supplements</h2>
-        <p>${sentenceCase(suppData)}</p>
-      </section>`;
-}
-
-function generateCheatDaySection(cheatDayData) {
-  return !cheatDayData
-    ? ""
-    : `<section id='cheat-day'>
-        <h2>Cheat day</h2>
-        <p>${sentenceCase(cheatDayData)}</p>
-      </section>`;
+    : details.map(detail => `<h2>${detail.id}</h2> <p>${sentenceCase(detail.value)}</p>`).join("");
 }
 
 function generateMealPrepSection(meals) {
@@ -102,7 +77,7 @@ function generateMealPrepSection(meals) {
     </article>`;
   });
 
-  return `<section id="meal-prep"><h2>Food</h2>${template}</section>`;
+  return `<section id="prep-meals"><h2>Food</h2>${template}</section>`;
 }
 
 function generateFoodItems(food) {

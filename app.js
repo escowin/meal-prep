@@ -13,7 +13,7 @@ const init = () => {
     console.log(`
     ·················································
     ·                                               ·
-    ·               meal prep v${version}                ·
+    ·               meal-prep v${version}                ·
     ·            © ${year} edwin m. escobar            ·
     ·     https://github.com/escowin/meal-prep      ·
     ·                                               ·

@@ -2,7 +2,7 @@
     --accent: rgb(68, 66, 66);
     --link: rgb(163, 0, 0);
     --border: 1px solid var(--accent);
-    --section-padding: .5rem 1rem;
+    --section-padding: .5rem .25rem .5rem 1rem;
 }
 
 * {
@@ -24,41 +24,53 @@ body {
     height: 100vh;
 }
 
-header {
-    display: grid;
-    grid-template-columns: repeat(3, max-content);
-    gap: 0 .5rem;
-    padding: var(--section-padding);
-    border-bottom: var(--border);
-    border-left: var(--border);
-}
-
+/* header divs */
 h1 {
-    grid-column: span 3;
+    padding-left: .5rem;
 }
 
+header section {
+    display: grid;
+    grid-template-columns: repeat(4, max-content);
+    gap: 0 1rem;
+    padding: var(--section-padding);
+    border: var(--border);
+    border-right: none;
+}
+
+#goal {
+    grid-column: 1 / -1;
+    /* display: flex; */
+    /* gap: 2.75rem; */
+}
+
+.key {
+    font-weight: bolder;
+}
+
+/* main divs */
 main {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    border-top: var(--border);
-    border-bottom: var(--border);
-    border-left: var(--border);
+    border: var(--border);
+    border-right: none;
     padding: var(--section-padding);
 }
 
-section {
-    display: flex;
-    flex-direction: column;
+#prep-details {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: baseline;
 }
 
-p,
+main p,
 .meal, 
 li {
     padding-left: 1rem;
 }
 
-#meal-prep {
+#prep-meals {
     gap: .25rem;
 }
 
@@ -91,6 +103,18 @@ a {
 
 a:hover {
     color: var(--link);
+}
+
+@media screen and (min-width: 765px) {
+    header section {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    #goal {
+        grid-column: span 4;
+        /* gap: 1rem; */
+        display: initial;
+    }
 }
 
 @media screen and (min-width: 1024px) {
