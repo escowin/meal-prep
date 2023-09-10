@@ -34,14 +34,16 @@ const format = {
 };
 
 const validate = {
-  input: (input) => (input ? true : false),
-  num: (num) => (!num || num < 1 ? false : true),
-  range: (num) => {
-    if (!(num > 0 && num <= 10)) {
-      console.log("enter a number between 1 - 10");
+  input: (input) => (!input ? (console.log("required"), false) : true),
+  num: (num) => (!num || num < 1 ? (console.log("enter a valid number"), false) : true),
+  range: (num, min, max) => {
+    if (!num || !min || !max) {
+      console.log("all parameters required")
       return false;
     }
-    return true;
+    return !(num >= min && num <= max)
+    ? (console.log(`Enter a number between ${min} - ${max}`), false)
+    : true
   },
   data: (data) => (!data ? "" : data),
 };

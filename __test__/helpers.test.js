@@ -58,13 +58,15 @@ test("returns true if value is 1 or higher", () => {
 });
 
 test("returns true if value is within range", () => {
-  expect(validate.range(1)).toEqual(true);
-  expect(validate.range(0)).toEqual(false);
+  expect(validate.range(1, 1, 10)).toEqual(true);
+  expect(validate.range(0, 1, 10)).toEqual(false);
+  expect(validate.range(11, 1, 10)).toEqual(false);
+  expect(validate.range(11, 1)).toEqual(false);
   expect(validate.range(11)).toEqual(false);
   expect(validate.range()).toEqual(false);
 });
 
-test("same data is returned if it exists", () => {
+test("returns parameter data if it exists", () => {
   const data = { a: "something" };
   expect(validate.data(data.a)).toEqual(data.a);
   expect(validate.data(data.b)).toEqual("");
