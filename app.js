@@ -3,7 +3,7 @@ const { writeFile, copyFile } = require("./utils/generate-page");
 const generateTemplate = require("./src/prep-template");
 const { version } = require("./package.json");
 const { prepQ, mealQ, foodQ } = require("./lib/questions");
-const { arrayGen, year, format } = require("./utils/helpers");
+const { calc, format } = require("./utils/helpers");
 const { mockPrep } = require("./lib/mockData");
 
 // logic
@@ -14,7 +14,7 @@ const init = () => {
     ·················································
     ·                                               ·
     ·               meal-prep v${version}                ·
-    ·            © ${year} edwin m. escobar            ·
+    ·            © ${calc.year()} edwin m. escobar            ·
     ·     https://github.com/escowin/meal-prep      ·
     ·                                               ·
     ·················································
@@ -30,7 +30,7 @@ const prepPrompt = () => {
 const mealPrompt = async (data) => {
   let prep = data;
   prep.meals = [];
-  arrayGen(prep.mealNum, prep.meals);
+  calc.arrays(prep.mealNum, prep.meals);
 
   for (let i = 0; i < prep.mealNum; i++) {
     console.log(`

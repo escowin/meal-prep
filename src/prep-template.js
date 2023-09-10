@@ -1,4 +1,4 @@
-const { format, year, calculateEndDate } = require("../utils/helpers");
+const { calc, format } = require("../utils/helpers");
 
 // logic.generate template literal
 function generatePage(templateData) {
@@ -10,7 +10,7 @@ function generatePage(templateData) {
     {
       id: "end",
       value: format.date(
-        calculateEndDate(prepInfo.startDate, prepInfo.duration)
+        calc.endDate(prepInfo.startDate, prepInfo.duration)
       ),
     },
     { id: "weight", value: prepInfo.weight },
@@ -47,7 +47,7 @@ function generatePage(templateData) {
     <footer>
       <h3>
         <a href="https://github.com/escowin/meal-prep" target="_blank">meal-prep</a>
-        &copy;${year} edwin m. escobar
+        &copy;${calc.year()} edwin m. escobar
       </h3>
     </footer>
   </body>

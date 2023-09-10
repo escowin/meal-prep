@@ -1,29 +1,16 @@
-const date = new Date();
-
-const format = {
-  // capitlizes first letter of string
-  sentence: (string) => string.charAt(0).toUpperCase() + string.slice(1),  
-  // reformats common date patterns into YYYY.MM.DD
-  date: (date) => date.replace(/[-/]/g, "."),
-  // plural & singular is dependent on a dynamic number value
-  duration: (num) => (num !== 1 ? `${num} weeks` : `${num} week`),
-  // formats single digit num values with 2-digit placeholder
-  num: (num) => (num === 10 ? num : `0${num}`),
-}
-
-module.exports = {
-  // returns current date as "YYYY-MM-DD"
-  currentDate: () => date.toISOString().split("T")[0],
+const calc = {
   // returns array with child array objects equal to the num value
-  arrayGen: (num, arr) => {
+  arrays: (num, arr) => {
     for (let i = 0; i < num; i++) {
       const childArr = [];
       arr.push(childArr);
     }
     return arr;
   },
+  // returns current date as "YYYY-MM-DD"
+  today: () => new Date().toISOString().split("T")[0],
   // returns an end date value calculated from start date and week duration (converted to milliseconds)
-  calculateEndDate: (start, duration) => {
+  endDate: (start, duration) => {
     const startDate = new Date(start);
     const endDate = new Date(
       startDate.getTime() + duration * 7 * 24 * 60 * 60 * 1000
@@ -31,6 +18,22 @@ module.exports = {
     const result = endDate.toISOString().split("T")[0];
     return result;
   },
+  // returns current year
+  year: () => new Date().getFullYear(),
+};
+
+const format = {
+  // capitlizes first letter of string
+  sentence: (string) => string.charAt(0).toUpperCase() + string.slice(1),
+  // reformats common date patterns into YYYY.MM.DD
+  date: (date) => date.replace(/[-/]/g, "."),
+  // plural & singular is dependent on a dynamic number value
+  duration: (num) => (num !== 1 ? `${num} weeks` : `${num} week`),
+  // formats single digit num values with 2-digit placeholder
+  num: (num) => (num === 10 ? num : `0${num}`),
+};
+
+module.exports = {
+  calc,
   format,
-  year: date.getFullYear(),
 };
