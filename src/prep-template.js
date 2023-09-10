@@ -38,7 +38,7 @@ function generatePage(templateData) {
   <body>
     <header>
       <h1>${sentenceCase(prepInfo.name)}</h1>
-      <p>${prepInfo.goal}</p>
+      <p>\u2014 ${prepInfo.goal}</p>
     </header>
     <main>
       <section id="prep-stats">${generatePrepStats(prepStats)}</section>
@@ -64,7 +64,7 @@ function generatePrepStats(stats) {
 function generatePrepDetails(details) {
   return !details
     ? ""
-    : details.map(detail => `<h2>${detail.id}</h2> <p>${sentenceCase(detail.value)}</p>`).join("");
+    : details.map(detail => `<h2>${sentenceCase(detail.id)}</h2> <p>${sentenceCase(detail.value)}</p>`).join("");
 }
 
 function generateMealPrepSection(meals) {
@@ -73,7 +73,7 @@ function generateMealPrepSection(meals) {
   meals.forEach((meal, i) => {
     template += `<article class="meal">
       <h3>meal ${i + 1}</h3>
-      <ul id="foods">${generateFoodItems(meal.food)}</ul>
+      <ul class="foods">${generateFoodItems(meal.food)}</ul>
     </article>`;
   });
 

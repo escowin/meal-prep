@@ -9,15 +9,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* outline: 1px dotted blue */
 }
 
 /* box */
 body {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    padding: 1rem;
+    gap: .5rem;
+    padding: .5rem 1rem;
     font-family: 'Khula', sans-serif;
     font-variant: small-caps;
     letter-spacing: .05rem;
@@ -25,73 +24,75 @@ body {
 }
 
 /* header divs */
-h1 {
-    padding-left: .5rem;
+header {
+    padding: var(--section-padding)
 }
 
-header section {
-    display: grid;
-    grid-template-columns: repeat(4, max-content);
-    gap: 0 1rem;
+header p {
+    font-style: italic;
+}
+
+/* main divs */
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+section {
     padding: var(--section-padding);
     border: var(--border);
     border-right: none;
 }
 
-#goal {
-    grid-column: 1 / -1;
-    /* display: flex; */
-    /* gap: 2.75rem; */
+#prep-stats {
+    display: grid;
+    grid-template-columns: repeat(4, max-content);
+    gap: 0 1rem;
 }
 
 .key {
     font-weight: bolder;
 }
 
-/* main divs */
-main {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    border: var(--border);
-    border-right: none;
-    padding: var(--section-padding);
-}
-
 #prep-details {
     display: grid;
     grid-template-columns: auto 1fr;
     align-items: baseline;
+    border: var(--border);
+    border-right: none;
+    padding: var(--section-padding);
+    gap: 0 1rem;
 }
 
-main p,
-.meal, 
+.meal,
 li {
     padding-left: 1rem;
 }
 
 #prep-meals {
-    gap: .25rem;
+    flex: 1;
 }
 
 .meal {
-    grid-column: 2 / 3;
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 0 1rem;
 }
 
+.foods {
+    list-style: none;
+    margin-top: .17rem;
+}
+
+/* footer divs */
 footer {
     display: flex;
     justify-content: center;
     text-align: center;
     color: var(--accent);
-}
-
-/* lists */
-#foods {
-    list-style: none;
-    padding-top: .15rem;
+    font-size: .75rem;
 }
 
 /* typography */
@@ -106,39 +107,31 @@ a:hover {
 }
 
 @media screen and (min-width: 765px) {
-    header section {
+    header {
+        display: flex;
+        gap: 1rem;
+        align-items: baseline;
+    }
+
+    #prep-stats {
         grid-template-columns: repeat(4, 1fr);
     }
 
-    #goal {
-        grid-column: span 4;
-        /* gap: 1rem; */
-        display: initial;
+    #prep-meals {
+        flex: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: .5rem 0rem;
+    }
+
+    #prep-meals h2 {
+        grid-column: 1 / -1;
     }
 }
 
 @media screen and (min-width: 1024px) {
-    main {
-        gap: .5rem;
-    }
-
-    header {
-        grid-template-columns: 1fr auto auto;
-        grid-template-areas:
-            "a b b"
-            "a c c";
-        gap: .25rem 1rem;
-    }
-
-    section {
-        display: grid;
-        grid-template-columns: 10rem auto;
-        gap: .5rem;
-    }
-
-    p,
     .meal {
-        padding-left: 0;
+        padding-left: 3rem;
     }
 }
 
@@ -147,19 +140,23 @@ a:hover {
         font-size: 1.5rem;
     }
 
-    main {
-        flex-grow: initial;
+    main,
+    #prep-meals {
+        flex: 0;
     }
 
-    section {
-        display: grid;
-        grid-template-columns: 12.5rem auto;
-        gap: 1rem;
-        justify-content: flex-start;
+    #prep-stats {
+        grid-template-columns: repeat(4, 1fr);
     }
 
-    footer {
-        font-size: 75%;
-        margin-top: auto;
+    #prep-meals {
+        display: flex;
+        flex-direction: column;
+        gap: .25rem;
     }
+
+    .foods {
+        margin-top: .25rem;
+    }
+
 }
